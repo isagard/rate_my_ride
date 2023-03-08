@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Rate My Ride</title>
+    </head>
+    
+    <body>
+        <a href="/ride/service/{{service.slug }}/add_review/">Add Review</a> <br/>
+        <div>
+            {% if service %}
+                <h1>{{ service.name }}</h1>
+                {% if reviews %}
+                    <ul>
+                        {% for review in reviews %}
+                        <li><a href="{{ review.url }}">{{ review.title }}</a></li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <strong>No reviews currently in service.</strong>
+                {% endif %}
+            {% else %}
+                The specified service does not exist.
+            {% endif %}
+        </div>
+    </body>
+
+</html>
