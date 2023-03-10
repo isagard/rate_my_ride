@@ -10,6 +10,17 @@ from django.contrib.auth import authenticate, login, logout
 from datetime import datetime
 
 def homepage(request):
+    service_list = Service['location'].objects.order_by('-views')
+
+    city_dict = {}
+    city_dict['categories'] = service_list
+    
+    visitor_cookie_handler(request)
+
+    response = render(request, 'rango/homepage.html', context=city_dict)
+    return response
+
+def homepage(request):
     review_list_likes = Review.objects.order_by('-likes')
     review_list_views = Review.objects.order_by('-views')
     service_list = Service['location'].objects.order_by('-views')
