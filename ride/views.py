@@ -13,38 +13,22 @@ def homepage(request):
     service_list = Service['location'].objects.order_by('-views')
 
     city_dict = {}
-    city_dict['categories'] = service_list
+    city_dict['services'] = service_list
     
     visitor_cookie_handler(request)
 
     response = render(request, 'rango/homepage.html', context=city_dict)
     return response
 
-def homepage(request):
-    review_list_likes = Review.objects.order_by('-likes')
-    review_list_views = Review.objects.order_by('-views')
-    service_list = Service['location'].objects.order_by('-views')
-
-    city_dict = {}
-    city_dict['boldmessage'] = 'Crunchy, creamy, cookie, candy, cupcake!'
-    city_dict['categories'] = service_list
-    city_dict['pages'] = page_list
-    
-    visitor_cookie_handler(request)
-
-    response = render(request, 'rango/homepage.html', context=context_dict)
-    return response
-
-
 @login_required
-def add_service_page(request, service_name_slug):
+def add_service(request, service_name_slug):
     try:
         service = Service.objects.get(slug=service_name_slug)
     except Service.DoesNotExist:
         service = None
 
     if service is None:
-        return redirect('/rango/')
+        return redirect('/ride/')
 
     form = PageForm()
 
@@ -58,12 +42,27 @@ def add_service_page(request, service_name_slug):
                 page.views = 0
                 page.save()
 
-                return redirect(reverse('rango:show_category',kwargs={'category_name_slug':category_name_slug}))
+                return redirect(reverse('ride:show_service',kwargs={'service_name_slug':service_name_slug}))
     else:
         print(form.errors)
 
-        context_dict = {'form': form, 'category': category}
-        return render(request, 'rango/add_page.html', context=context_dict)
+        context_dict = {'form': form, 'service': service}
+        return render(request, 'ride/add_service.html', context=context_dict)
+
+@login_required
+def add_review(request):
+    form = ServiceForm()
+
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+
+        if form.is_valid():
+            form.save(commit=True)
+            return redirect('/ride/')
+        else:
+            print(form.errors)
+
+    return render(request, 'rango/add_review.html', {'form': form})
 
 def register(request):
     registered = False
