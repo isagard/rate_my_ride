@@ -1,0 +1,19 @@
+<ul>
+    {% if services %}
+        {% for s in services %}
+            {% if s == current_service %}
+            <li>
+            <strong>
+                <a href="{% url 'ride:show_service' s.slug %}">{{ s.name }}</a>
+            </strong>
+            </li>
+            {% else %}
+            <li>
+                <a href="{% url 'ride:show_service' s.slug %}">{{ s.name }}</a>
+            </li>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <li><strong>There are no services present.</strong></li>
+    {% endif %}
+</ul>

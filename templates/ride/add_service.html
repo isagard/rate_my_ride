@@ -1,29 +1,26 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Rate My Ride</title>
-    </head>
-    
-    <body>
-        <h1>Add a Service</h1>
-        
-        <div>
-            <form id="service_form" method="post" action="/ride/add_service/">
+{% extends 'ride/base.html' %}
+{% load staticfiles %}
 
-                {% csrf_token %}
-                {% for hidden in form.hidden_fields %}
-                    {{ hidden }}
-                {% endfor %}
-                
-                {% for field in form.visible_fields %}
-                    {{ field.errors }}
-                    {{ field.help_text }}
-                    {{ field }}
-                {% endfor %}
-                
-                <input type="submit" name="submit" value="Create Service" />
+{% block title_block %}
+    Add a Category
+{% endblock %}
 
-            </form>
-        </div>
-    </body>
-</html>
+{% block body_block %}
+{% if user.is_authenticated %}
+    <div>
+        <form id="service_form" method="post" action="/ride/add_service/">
+            {% csrf_token %}
+            {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+            {% endfor %}
+            {% for field in form.visible_fields %}
+                {{ field.errors }}
+                {{ field.help_text }}
+                {{ field }}
+            {% endfor %}
+            <input type="submit" name="submit" value="Create Service" />
+        </form>
+    </div>
+{% endif %}
+{% endblock %}
+
