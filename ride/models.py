@@ -12,7 +12,7 @@ class Review(models.Model):
 
 	location = models.CharField(max_length=32)
 	service = models.CharField(max_length=32)
-	rating = modles.IntegerField(default=0)
+	rating = models.IntegerField(default=0)
 	title = models.CharField(max_length=128)
 	body = models.CharField(max_length=256)
 
