@@ -4,9 +4,8 @@ from django.urls import reverse
 from django.http import HttpResponse 
 from ride.forms import ServiceForm
 from ride.forms import ReviewForm
-from ride.models import ServicePage
-from ride.models import Review
 from ride.forms import UserForm, UserProfileForm
+from ride.models import ServicePage, Review
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from datetime import datetime
@@ -19,7 +18,7 @@ def home(request):
     return response
 
 def glasgow(request):
-    service_list = ServicePage['location'].objects.order_by('-views')
+    service_list = ServicePage.objects.order_by('location')
 
     city_dict = {}
     city_dict['boldmessage'] = 'This is the Glasgow page'
