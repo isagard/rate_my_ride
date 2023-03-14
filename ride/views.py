@@ -132,6 +132,24 @@ def register(request):
 
     return render(request,'ride/register.html',context = {'user_form': user_form,'profile_form': profile_form,'registered': registered})
 
+def user_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(username=username, password=password)
+
+        if user:
+            if user.is_active:
+                login(request, user)
+                return redirect(reverse('ride:index'))
+            else:
+                return HttpResponse("Your Ride account is disabled.")
+        else:
+            print("Invalid login details: {0}, {1}".format(username, password))
+            return HttpResponse("Invalid login details supplied.")
+    else:
+        return render(request, 'ride/login.html', {})
 
 @login_required
 def user_logout(request):
