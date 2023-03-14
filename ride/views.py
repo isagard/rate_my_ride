@@ -11,15 +11,44 @@ from django.contrib.auth import authenticate, login, logout
 from datetime import datetime
 
 def home(request):
+    
+    visitor_cookie_handler(request)
+
+    response = render(request, 'rango/home.html')
+    return response
+
+def glasgow(request):
     service_list = ServicePage.objects.order_by('location')
 
     city_dict = {}
+    city_dict['boldmessage'] = 'This is the Glasgow page'
     city_dict['services'] = service_list
     
     visitor_cookie_handler(request)
 
-    response = render(request, 'rango/homepage.html', context=city_dict)
-    return response
+    return render(request, 'ride/glasgow.html', context=city_dict)
+
+def edinburgh(request):
+    service_list = ServicePage['location'].objects.order_by('-views')
+
+    city_dict = {}
+    city_dict['boldmessage'] = 'This is the Edinburgh page'
+    city_dict['services'] = service_list
+    
+    visitor_cookie_handler(request)
+    
+    return render(request, 'ride/edinburgh.html', context=city_dict)
+
+def aberdeen(request):
+    service_list = ServicePage['location'].objects.order_by('-views')
+
+    city_dict = {}
+    city_dict['boldmessage'] = 'This is the Aberdeen page'
+    city_dict['services'] = service_list
+    
+    visitor_cookie_handler(request)
+    
+    return render(request, 'ride/aberdeen.html', context=city_dict)
 
 @login_required
 def add_service(request, service_name_slug):
@@ -31,17 +60,17 @@ def add_service(request, service_name_slug):
     if service is None:
         return redirect('/ride/')
 
-    form = PageForm()
+    form = ReviewForm()
 
     if request.method == 'POST':
-        form = PageForm(request.POST)
+        form = ReviewForm(request.POST)
 
         if form.is_valid():
             if service:
-                page = form.save(commit=False)
-                page.service = service
-                page.views = 0
-                page.save()
+                review = form.save(commit=False)
+                review.service = service
+                review.views = 0
+                review.save()
 
                 return redirect(reverse('ride:show_service',kwargs={'service_name_slug':service_name_slug}))
     else:
@@ -115,15 +144,3 @@ def visitor_cookie_handler(request):
     else:
         request.session['last_visit'] = last_visit_cookie
     request.session['visits'] = visits
-
-def glasgow(request):
-    context_dict = {'boldmessage': 'This is the Glasgow page'}
-    return render(request, 'ride/glasgow.html', context=context_dict)
-
-def edinburgh(request):
-    context_dict = {'boldmessage': 'This is the Edinburgh page'}
-    return render(request, 'ride/edinburgh.html', context=context_dict)
-
-def aberdeen(request):
-    context_dict = {'boldmessage': 'This is the Aberdeen page'}
-    return render(request, 'ride/aberdeen.html', context=context_dict)
