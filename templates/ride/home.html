@@ -1,27 +1,25 @@
-<!DOCTYPE html>
+{% extends 'ride/base.html' %}
+{% load staticfiles %}
 
-{% load staticfiles %} 
+{% block title_block %}
+    Home
+    <img src="{% static 'images/taxi_car.jpg' %}" alt="Picture of Car" />
+{% endblock %}
 
-<html>
-
-    <head>
-        <title>Rate My Ride</title>
-        <img src="{% static 'images/taxi_car.jpg' %}"
-                alt="Picture of Car" />
-    </head>
-    
-    <body>
-        <h1>Home</h1>
-        <div>
-            <strong>{{ boldmessage }}</strong><br />
-        </div>
-            
-        <div>
-            <h2>Locations</h2>
-            <a href="/ride/glasgow/">Glasgow</a><br />
-            <a href="/ride/edinburgh/">Edinburgh</a><br />
-            <a href="/ride/aberdeen/">Aberdeen</a><br />
-        </div>
-    </body>
-
-</html>
+{% block body_block %}
+    <div>
+        {% if user.is_authenticated %}
+            hiya {{ user.username }}!
+        {% else %}
+            hey there!
+        {% endif %}
+        <br />
+        <strong>{{ boldmessage }}</strong>
+    </div>
+    <div>
+        <h2>Locations</h2>
+        <a href="/ride/glasgow/">Glasgow</a><br />
+        <a href="/ride/edinburgh/">Edinburgh</a><br />
+        <a href="/ride/aberdeen/">Aberdeen</a><br />
+    </div>
+{% endblock %}

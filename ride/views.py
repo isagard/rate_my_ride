@@ -4,9 +4,8 @@ from django.urls import reverse
 from django.http import HttpResponse 
 from ride.forms import ServiceForm
 from ride.forms import ReviewForm
-from ride.models import ServicePage
-from ride.models import Review
 from ride.forms import UserForm, UserProfileForm
+from ride.models import ServicePage, Review
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from datetime import datetime
