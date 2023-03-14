@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+
+<html>
+    <head>
+        <title>
+            Rate My Ride -
+            {% block title_block %}
+            How to Tango with Django!
+            {% endblock %}
+        </title>
+    </head>
+    <body>
+        <div>
+            {% block body_block %}
+            {% endblock %}
+        </div>
+        <hr />
+        <div>
+            <ul>
+                <li><a href="{% url 'ride:add_service' %}">Add a New Service</a></li>
+                <li><a href="{% url 'ride:glasgow' %}">Glasgow</a></li>
+                <li><a href="{% url 'ride:edinburgh' %}">Edinburgh</a></li>
+                <li><a href="{% url 'ride:aberdeen' %}">Aberdeen</a></li>
+                <li><a href="{% url 'ride:home' %}">Home</a></li>
+            </ul>
+        </div>
+    </body>
+</html>
+    

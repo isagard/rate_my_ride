@@ -17,9 +17,15 @@ from django.contrib import admin
 from django.urls import path
 from django.urls import include
 from ride import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
-    path('', views.homepage, name='homepage'),
+    path('', views.home, name='home'),
+    path('glasgow/', views.glasgow, name='glasgow'),
+    path('edinburgh/', views.edinburgh, name='edinburgh'),
+    path('aberdeen/', views.aberdeen, name='aberdeen'),
     path('ride/', include('ride.urls')),
+    # The above maps any URLs starting with rate_my_ride/ to be handled by ride.
     path('admin/', admin.site.urls),
 ]

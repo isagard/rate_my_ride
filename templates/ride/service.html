@@ -1,0 +1,29 @@
+{% extends 'ride/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    {% if service %}
+    {{ service.name }}
+    {% else %}
+        Unknown Service
+    {% endif %}
+{% endblock %}
+
+{% block body_block %}
+    {% if service %}
+        <h1>{{ service.name }}</h1>
+        {% if reviews %}
+        <ul>
+            {% for review in reviews %}
+                <li><a href="{{ review.url }}">{{ review.title }}</a></li>
+            {% endfor %}
+        </ul>
+        {% else %}
+            <strong>No reviews currently in service.</strong>
+        {% endif %}
+        
+        <a href="{% url 'ride:add_review' service.slug %}">Add Review</a> <br />
+    {% else %}
+        The specified service does not exist.
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+{% load staticfiles %} 
+
+<html>
+
+    <head>
+        <title>Rate My Ride</title>
+        <img src="{% static 'images/taxi_car.jpg' %}"
+                alt="Picture of Car" />
+    </head>
+    
+    <body>
+        <h1>Glasgow</h1>
+        <div>
+            <strong>{{ boldmessage }}</strong><br />
+        </div>
+
+        <div>
+            <h2>Services</h2>
+            {% if services %}
+            <ul>
+                {% for service in services %}
+                <li>
+                    <a href="{% url 'ride:show_service' service.slug %}">
+                        {{ service.name }}
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+                <strong>There are no services present.</strong>
+            {% endif %}
+        </div>
+
+        <div>
+            <h2>Most Viewed Reviews</h2>
+            {% if viewedReviews %}
+            <ul>
+                {% for viewedReview in viewedReviews %}
+                <li>{{ viewedReview.name }}</li>
+                {% endfor %}
+            </ul>
+            {% else %}
+                <strong>There are no reviews present.</strong>
+            {% endif %}
+        </div>
+
+        <div>
+            {% if review %}
+            <h2>Most Viewed Reviews</h2>
+            <ul>
+                {% for review in reviews %}
+                <li><a href="{{ review.url }}">{{ review.title }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <strong>There are no reviews present.</strong>
+        {% endif %}
+        </div>
+
+        <div>
+            <h2>Most Liked Reviews</h2>
+            {% if LikedReviews %}
+            <ul>
+                {% for likedReview in likedReviews %}
+                <li><a href="{{ review.url }}">{{ review.title }}</a></li>
+                {% endfor %}
+            </ul>
+            {% else %}
+                <strong>There are no reviews present.</strong>
+            {% endif %}
+        </div>
+
+        <div>
+            <h3>Add Service</h3>
+            <a href="/ride/add_service/">Add a New Service</a><br />
+        </div>
+        
+        <div>
+            <a href="/ride/">Home</a><br />
+            <a href="/ride/edinburgh/">Edinburgh</a><br />
+            <a href="/ride/aberdeen/">Aberdeen</a><br />
+        </div>
+    </body>
+
+</html>

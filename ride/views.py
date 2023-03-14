@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from datetime import datetime
 
-def homepage(request):
+def home(request):
     service_list = Service['location'].objects.order_by('-views')
 
     city_dict = {}
@@ -114,3 +114,15 @@ def visitor_cookie_handler(request):
     else:
         request.session['last_visit'] = last_visit_cookie
     request.session['visits'] = visits
+
+def glasgow(request):
+    context_dict = {'boldmessage': 'This is the Glasgow page'}
+    return render(request, 'ride/glasgow.html', context=context_dict)
+
+def edinburgh(request):
+    context_dict = {'boldmessage': 'This is the Edinburgh page'}
+    return render(request, 'ride/edinburgh.html', context=context_dict)
+
+def aberdeen(request):
+    context_dict = {'boldmessage': 'This is the Aberdeen page'}
+    return render(request, 'ride/aberdeen.html', context=context_dict)
