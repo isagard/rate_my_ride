@@ -2,15 +2,16 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.http import HttpResponse 
-from rango.forms import ServiceForm
-from rango.forms import ReviewForm
-from rango.forms import UserForm, UserProfileForm
+from ride.forms import ServiceForm
+from ride.forms import ReviewForm
+from ride.forms import UserForm, UserProfileForm
+from ride.models import ServicePage, Review
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from datetime import datetime
 
 def home(request):
-    service_list = Service['location'].objects.order_by('-views')
+    service_list = ServicePage.objects.order_by('location')
 
     city_dict = {}
     city_dict['services'] = service_list
