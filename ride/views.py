@@ -17,7 +17,7 @@ def home(request):
     
     visitor_cookie_handler(request)
 
-    response = render(request, 'rango/homepage.html', context=city_dict)
+    response = render(request, 'rango/home.html', context=city_dict)
     return response
 
 @login_required
