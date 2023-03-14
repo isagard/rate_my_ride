@@ -12,14 +12,12 @@ from django.contrib.auth import authenticate, login, logout
 from datetime import datetime
 
 def home(request):
-    
-    visitor_cookie_handler(request)
 
-    response = render(request, 'rango/home.html')
+    response = render(request, 'ride/home.html')
     return response
 
 def glasgow(request):
-    service_list = ServicePage['location'].objects.order_by('-views')
+    service_list = ServicePage.objects.filter(location='Glasgow').order_by('name')
 
     city_dict = {}
     city_dict['boldmessage'] = 'This is the Glasgow page'
@@ -30,7 +28,7 @@ def glasgow(request):
     return render(request, 'ride/glasgow.html', context=city_dict)
 
 def edinburgh(request):
-    service_list = ServicePage['location'].objects.order_by('-views')
+    service_list = ServicePage.objects.filter(location='Edinburgh').order_by('name')
 
     city_dict = {}
     city_dict['boldmessage'] = 'This is the Edinburgh page'
@@ -41,7 +39,7 @@ def edinburgh(request):
     return render(request, 'ride/edinburgh.html', context=city_dict)
 
 def aberdeen(request):
-    service_list = ServicePage['location'].objects.order_by('-views')
+    service_list = ServicePage.objects.filter(location='Aberdeen').order_by('name')
 
     city_dict = {}
     city_dict['boldmessage'] = 'This is the Aberdeen page'
@@ -51,8 +49,37 @@ def aberdeen(request):
     
     return render(request, 'ride/aberdeen.html', context=city_dict)
 
+def show_services(request, service_name_slug):
+    context_dict = {}
+
+    try:
+        service = ServicePage.objects.get(slug=service_name_slug)
+        review = Review.objects.filter(service=service)
+        context_dict['pages'] = review
+        context_dict['category'] = service
+    except ServicePage.DoesNotExist:
+        context_dict['service'] = None
+        context_dict['review'] = None
+
+    return render(request, 'ride/service.html', context=context_dict)
+
 @login_required
-def add_service(request, service_name_slug):
+def add_service(request):
+    form = ServiceForm()
+
+    if request.method == 'POST':
+        form = ServiceForm(request.POST)
+
+        if form.is_valid():
+            form.save(commit=True)
+            return redirect('/ride/')
+        else:
+            print(form.errors)
+
+    return render(request, 'ride/add_service.html', {'form': form})
+
+@login_required
+def add_review(request, review_name_slug):
     try:
         service = Service.objects.get(slug=service_name_slug)
     except Service.DoesNotExist:
@@ -73,27 +100,12 @@ def add_service(request, service_name_slug):
                 review.views = 0
                 review.save()
 
-                return redirect(reverse('ride:show_service',kwargs={'service_name_slug':service_name_slug}))
+                return redirect(reverse('ride:show_services',kwargs={'service_name_slug':service_name_slug}))
     else:
         print(form.errors)
 
         context_dict = {'form': form, 'service': service}
-        return render(request, 'ride/add_service.html', context=context_dict)
-
-@login_required
-def add_review(request):
-    form = ServiceForm()
-
-    if request.method == 'POST':
-        form = ReviewForm(request.POST)
-
-        if form.is_valid():
-            form.save(commit=True)
-            return redirect('/ride/')
-        else:
-            print(form.errors)
-
-    return render(request, 'rango/add_review.html', {'form': form})
+        return render(request, 'ride/add_review.html', context=context_dict)
 
 def register(request):
     registered = False
