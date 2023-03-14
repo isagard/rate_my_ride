@@ -10,7 +10,9 @@ urlpatterns = [
     path('glasgow/', views.glasgow, name='glasgow'),
     path('edinburgh/', views.edinburgh, name='edinburgh'),
     path('aberdeen/', views.aberdeen, name='aberdeen'),
-    path('service/<slug:service_name_slug>/', views.show_service,
+    path('service/<slug:service_name_slug>/', views.show_services,
          name='show_service'),
     path('add_service/', views.add_service, name='add_service'),
+    path('register/', views.register, name='register'),
+    path('login/', views.login, name='login'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

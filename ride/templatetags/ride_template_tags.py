@@ -3,6 +3,6 @@ from ride.models import ServicePage
 
 register = template.Library()
 
-@register.inclusion_tag('ride/categories.html')
-def get_category_list(current_category=None):
+@register.inclusion_tag('ride/services.html')
+def get_service_list(current_service=None):
     return {'services': ServicePage.objects.all(), 'current_service': current_service}
