@@ -162,6 +162,10 @@ def get_server_side_cookie(request, cookie, default_val=None):
         val = default_val
     return val
 
+@login_required
+def restricted(request):
+    return render(request, 'rango/restricted.html')
+
 def visitor_cookie_handler(request):
     visits = int(get_server_side_cookie(request, 'visits', '1'))
     last_visit_cookie = get_server_side_cookie(request,'last_visit',str(datetime.now()))
