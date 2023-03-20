@@ -27,11 +27,10 @@ class ServiceForm(forms.ModelForm):
     logo = forms.ImageField(label='Upload your logo')
 
     # An inline class to provide additional information on the form.
-    class Meta:
+    class Meta: 
         # Provide an association between the ModelForm and a model
         model = ServicePage
         fields = ('name', 'location', 'body', 'logo')
-
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
