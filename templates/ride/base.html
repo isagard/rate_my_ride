@@ -2,76 +2,85 @@
 {% load staticfiles %}
 {% load ride_template_tags %} 
 
-<html>
-    <head>
-        <title>
-            Rate My Ride -
-            {% block title_block %}
-                Rate My Ride
-                <img src="{% static 'images/taxi_car.jpg' %}" alt="Picture of Car" />
-            {% endblock %}
-        </title>
-        <!-- <style>
-            h1 {
-                font-size: 16pt;
-                font-style: italic;
-                text-align: center;
-                color:black;
-                font-family: 'Arial', 'Helvetica', sans-serif;
-            }
-            
-            body {
-                background-color:darkseagreen;
-            }
-            
-            .sample-list {
-                list-style-type: none;
-                background-color: #333333;
-                color: #FFFFFF;
-                padding: 10px;
-            }
-            
-            a {
-                color:#FFFFFF;
-                text-decoration: none;
-            }
-            
-            a:hover {
-                color: blue;
-                text-decoration: underline;
-            }        
-        </style> -->
-    <link rel="stylesheet" href="ride/static/ride/stylesheet.css">
-    </head>
-    <body>
-        <div>
-        {% block body_block %}
-        {% endblock %}
-        </div>
-        <!-- <div>
-            {% block sidebar_block %}
-                {% get_service_list service %}
-            {% endblock %}
-        </div> -->
-        <hr />
-        <div>
-            <ul>
-                {% if user.is_authenticated %}
-                    <!-- Show these links when the user is logged in -->
-                    <li><a href="{% url 'ride:restricted' %}">Restricted Page</a></li>
-                    <li><a href="{% url 'ride:logout' %}">Logout</a></li>
-                    <li><a href="{% url 'ride:add_service' %}">Add New Service</a></li>
-                {% else %}
-                    <!-- Show these links when the user is NOT logged in -->
-                    <li><a href="{% url 'ride:register' %}">Sign Up</a></li>
-                    <li><a href="{% url 'ride:login' %}">Login</a></li>
-                {% endif %}
-                    <!-- Outside the conditional statements, ALWAYS show -->
-                    <li><a href="{% url 'ride:glasgow' %}">Glasgow</a></li>
-                    <li><a href="{% url 'ride:edinburgh' %}">Edinburgh</a></li>
-                    <li><a href="{% url 'ride:aberdeen' %}">Aberdeen</a></li>
-                    <li><a href="{% url 'ride:home' %}">Home</a></li>
-            </ul>                
-        </div>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author"
+        content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator"
+        content="Jekyll v3.8.5">
+    <link rel="icon" href="{% static 'images/taxi_car.jpg' %}">
+    <title>
+        Rate My Ride - {% block title_block %}Home{% endblock %}
+    </title>
+    <!-- Bootstrap core CSS -->
+    <link href="https://getbootstrap.com/docs/4.2/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="https://getbootstrap.com/docs/4.2/examples/dashboard/dashboard.css"
+        rel="stylesheet">
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark p-0">
+    <a class="navbar-brand p-2" href="{% url 'ride:home' %}">Rate My Ride</a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse"
+        data-target="#navbarCollapse" aria-controls="navbarCollapse"
+        aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+    <ul class="navbar-nav mr-auto">
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'ride:edinburgh' %}">Edinburgh</a></li>
+    <li class="nav-item ">
+        <a class="nav-link" href="{% url 'ride:glasgow' %}">Glasgow</a></li>
+    <li class="nav-item ">
+       <a class="nav-link" href="{% url 'ride:aberdeen' %}">Aberdeen</a></li>
+    {% if user.is_authenticated %}
+    <li class="nav-item ">
+        <a class="nav-link"
+        href="{% url 'ride:restricted' %}">Restricted</a></li>
+    <li class="nav-item">
+        <a class="nav-link"
+        href="{% url 'ride:logout' %}?next=/ride/">Logout</a></li>
+    {% else %}
+    <li class="nav-item">
+        <a class="nav-link"
+        href="{% url 'ride:register' %}">Register Here</a></li>
+    <li class="nav-item ">
+        <a class="nav-link"
+        href="{% url 'ride:login' %}">Login</a></li>
+    {% endif %}
+    </ul>
+    </div>
+    </nav>
+</header>
+    
+    <main role="main" class="px-4">
+    {% block body_block %}
+    {% endblock %}
+    <footer>
+        <p class="float-right"><a href="#">Back to top</a></p>
+        <p>&copy; 2023 Rate My Ride &middot; <a href="#">Privacy</a> &middot;
+            <a href="#">Terms</a></p>
+    </footer>
+    </main>
+    <!-- Bootstrap core JavaScript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script>
+        window.jQuery || document.write('<script src="https://getbootstrap.com/docs/4.2/assets/js/vendor/jquery-slim.min.js"><\/script>')
+        </script>
+    <script src="https://getbootstrap.com/docs/4.2/dist/js/bootstrap.bundle.min.js">
+        </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js">
+    </script>
+    <script src="https://getbootstrap.com/docs/4.2/examples/dashboard/dashboard.js">
+    </script>
     </body>
 </html>

@@ -142,7 +142,7 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request, user)
-                return redirect(reverse('ride:index'))
+                return redirect(reverse('ride:home'))
             else:
                 return HttpResponse("Your Ride account is disabled.")
         else:
@@ -154,7 +154,7 @@ def user_login(request):
 @login_required
 def user_logout(request):
     logout(request)
-    return redirect(reverse('ride:index'))
+    return redirect(reverse('ride:home'))
 
 def get_server_side_cookie(request, cookie, default_val=None):
     val = request.session.get(cookie)
