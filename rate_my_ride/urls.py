@@ -28,4 +28,4 @@ urlpatterns = [
     path('ride/', include('ride.urls')),
     # The above maps any URLs starting with rate_my_ride/ to be handled by ride.
     path('admin/', admin.site.urls),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

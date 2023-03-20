@@ -14,5 +14,7 @@ urlpatterns = [
          name='show_service'),
     path('add_service/', views.add_service, name='add_service'),
     path('register/', views.register, name='register'),
-    path('login/', views.login, name='login'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('login/', views.user_login, name='login'),
+    path('restricted/', views.restricted, name='restricted'), 
+    path('logout/', views.user_logout, name='logout'),
+] 
