@@ -21,6 +21,7 @@ def glasgow(request):
     city_dict = {}
     city_dict['boldmessage'] = 'This is the Glasgow page'
     city_dict['services'] = service_list
+    city_dict['location'] = 'glasgow'
     
     visitor_cookie_handler(request)
 
@@ -32,6 +33,7 @@ def edinburgh(request):
     city_dict = {}
     city_dict['boldmessage'] = 'This is the Edinburgh page'
     city_dict['services'] = service_list
+    city_dict['location'] = 'edinburgh'
     
     visitor_cookie_handler(request)
     
@@ -43,12 +45,13 @@ def aberdeen(request):
     city_dict = {}
     city_dict['boldmessage'] = 'This is the Aberdeen page'
     city_dict['services'] = service_list
+    city_dict['location'] = 'aberdeen'
     
     visitor_cookie_handler(request)
     
     return render(request, 'ride/aberdeen.html', context=city_dict)
 
-def show_services(request, service_name_slug):
+def show_services(request, service_name_slug, location):
     context_dict = {}
 
     try:
@@ -56,15 +59,19 @@ def show_services(request, service_name_slug):
         review = Review.objects.filter(service=service)
         context_dict['review'] = review
         context_dict['service'] = service
+        context_dict['location'] = location
     except ServicePage.DoesNotExist:
         context_dict['service'] = None
         context_dict['review'] = None
+        context_dict['location'] = location
 
     return render(request, 'ride/service.html', context=context_dict)
 
 @login_required
-def add_service(request):
+def add_service(request, location):
     form = ServiceForm()
+    # context_dict = {}
+    # context_dict['location'] = location
 
     if request.method == 'POST':
         form = ServiceForm(request.POST, request.FILES)
@@ -75,7 +82,7 @@ def add_service(request):
         else:
             print(form.errors)
 
-    return render(request, 'ride/add_service.html', {'form': form})
+    return render(request, 'ride/add_service.html', {'form': form}, location)
 
 @login_required
 def add_review(request, service_name_slug):
