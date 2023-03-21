@@ -14,7 +14,6 @@ class ReviewForm(forms.ModelForm):
     service = forms.CharField(max_length=32, help_text="Please enter the name of the taxi service for your review.")
     slug = forms.CharField(widget=forms.HiddenInput(), required=False)
 
-
     # An inline class to provide additional information on the form.
     class Meta:
         # Provide an association between the ModelForm and a model
