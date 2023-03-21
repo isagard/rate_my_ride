@@ -47,6 +47,24 @@
             background: linear-gradient(to right, rgb(118, 204, 224), rgb(136, 215, 219));
         } 
 
+        .right{
+            float:right;
+            padding: 15PX;
+            height: fit-content;
+        }
+        .footerdiv{
+            display: inline;
+            height: fit-content;
+        }
+        .left{
+            padding: 15px;
+            float: left;
+            height: fit-content;
+        }
+        footer{
+            height:41px;
+        }
+
         .sample-list {
             list-style-type: none;
             background-color: #333333;
@@ -80,14 +98,16 @@
             background: rgb(91, 177, 157);
         }
     
-        
+        li {
+            color:#333333; 
+        }
     </style>
 </head>
 <body>
 <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top p-0" style="background-color: rgb(132, 219, 227);">
     <img src="{% static 'images/taxi.png' %}" alt="Taxi" class="img-fluid" style="width: 150px; height: auto;">
-    <a class="navbar-brand p-2" href="{% url 'ride:home' %}">Rate My Ride</a>
+    <a class="navbar-brand p-2 black" href="{% url 'ride:home' %}">Rate My Ride</a>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse"
         data-target="#navbarCollapse" aria-controls="navbarCollapse"
@@ -95,24 +115,21 @@
     <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
-    <ul class="navbar-nav mr-auto">
+    <ul class="navbar-nav mr-auto p-4">
     <li class="nav-item">
-        <a class="nav-link" href="{% url 'ride:edinburgh' %}">Edinburgh</a></li>
+        <a class="nav-link text-dark" href="{% url 'ride:edinburgh' %}">Edinburgh</a></li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" href="{% url 'ride:glasgow' %}">Glasgow</a></li>
     <li class="nav-item ">
-        <a class="nav-link" href="{% url 'ride:glasgow' %}">Glasgow</a></li>
-    <li class="nav-item ">
-       <a class="nav-link" href="{% url 'ride:aberdeen' %}">Aberdeen</a></li>
+       <a class="nav-link text-dark" href="{% url 'ride:aberdeen' %}">Aberdeen</a></li>
     {% if user.is_authenticated %}
     <li class="nav-item">
-        <a class="nav-link"
-        href="{% url 'ride:logout' %}?next=/ride/">Logout</a></li>
+        <a class="nav-link text-dark" href="{% url 'ride:logout' %}?next=/ride/">Logout</a></li>
     {% else %}
     <li class="nav-item">
-        <a class="nav-link"
-        href="{% url 'ride:register' %}">Register Here</a></li>
+        <a class="nav-link text-dark" href="{% url 'ride:register' %}">Register Here</a></li>
     <li class="nav-item ">
-        <a class="nav-link"
-        href="{% url 'ride:login' %}">Login</a></li>
+        <a class="nav-link text-dark" href="{% url 'ride:login' %}">Login</a></li>
     {% endif %}
     </ul>
     </div>
@@ -121,15 +138,42 @@
         padding-top: 50px; /* adjust this value to move the header down */
     }       -->
 </header>
-    <main role="main" style="background-color: rgb(91, 177, 157);">
+    <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+        <div class="sidebar-sticky">
+            <ul class="navbar-nav mr-auto p-4">
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="{% url 'ride:edinburgh' %}">Edinburgh</a></li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="{% url 'ride:glasgow' %}">Glasgow</a></li>
+                <li class="nav-item ">
+                   <a class="nav-link text-dark" href="{% url 'ride:aberdeen' %}">Aberdeen</a></li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="{% url 'ride:logout' %}?next=/ride/">Logout</a></li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="{% url 'ride:register' %}">Register Here</a></li>
+                <li class="nav-item ">
+                    <a class="nav-link text-dark" href="{% url 'ride:login' %}">Login</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" style="background-color: rgb(91, 177, 157);">
         {% block body_block %}
         {% endblock %}
     </main>
     <footer>
-        <p class="float-right"><a href="#">Back to top</a></p>
-        <p>&copy; 2023 Rate My Ride </p>
+        <div class="footerdiv" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            <div class="left">
+                &copy; 2023 Rate My Ride
+            </div>
+            <div class="right">
+                <a href="#">Back to top</a>
+            </div>
+        </div>
     </footer>
-    </main>
+    
     <!-- Bootstrap core JavaScript -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
