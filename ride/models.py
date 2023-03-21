@@ -10,6 +10,11 @@ class ServicePage(models.Model):
 	location = models.CharField(max_length=32)
 	body = models.CharField(max_length=256)
 	logo = models.ImageField(upload_to='logo_images', blank=True)
+	slug = models.SlugField(unique=True, blank=True)
+
+	def save(self, *args, **kwargs):
+		self.slug = slugify(self.name)
+		super(ServicePage, self).save(*args, **kwargs)
 
 	def __str__(self): 
 		return self.name
