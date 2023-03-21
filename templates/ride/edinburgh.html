@@ -18,7 +18,7 @@
             <ul>
                 {% for service in services %}
                     <li>
-                        <a href="{% url 'ride:show_service' service.slug %}">
+                        <a href="{% url 'ride:show_service' service.slug context_dict.location %}">
                             {{ service.name }}
                         </a>
                     </li>
@@ -75,7 +75,7 @@
 
         <div>
             <h3>Add Service</h3>
-            <a href="/ride/add_service/">Add a New Service</a><br />
+            <a href="/ride/{{ location }}/add_service/">Add a New Service</a><br />
         </div>
     
 {% endblock %}

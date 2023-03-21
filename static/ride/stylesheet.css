@@ -22,9 +22,22 @@ a {
     color:#FFFFFF;
     text-decoration: none;
 }
+
 a:hover {
     color: blue;
     text-decoration: underline;
+}
+
+.inner-row{
+    height: 100vh;
+}
+
+.primaryBg{
+    background: #96c9d4;
+}
+
+.primaryColor{
+    color:aquamarine;
 }
     
         
