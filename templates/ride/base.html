@@ -25,7 +25,8 @@
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark p-0">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top p-0" style="background-color: rgb(145, 224, 255);">
+    <img src="{% static 'images/taxi.png' %}" alt="Taxi" class="img-fluid" style="width: 150px; height: auto;">
     <a class="navbar-brand p-2" href="{% url 'ride:home' %}">Rate My Ride</a>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -56,20 +57,11 @@
     </ul>
     </div>
     </nav>
-    <div class="jumbotron pb-1" style="border: 3px solid rgb(255, 255, 255);background-color: rgb(189, 255, 255);">
-          <div class="row align-items-left">
-            <div class="col-md-2">
-              <img src="{% static 'images/taxi.png' %}" alt="Taxi" class="img-fluid">
-            </div>
-            <div class="col-md-9">
-              <h1 class="jumbotron-heading display-4">Rate My Ride</h1>
-            </div>
-          </div>
-      </div>
+    <!-- h1 {
+        padding-top: 50px; /* adjust this value to move the header down */
+    }       -->
 </header>
-<header>
-</header>
-    <main role="main" class="container">
+    <main role="main" style="background-color: rgb(196, 233, 248);">
         {% block body_block %}
         {% endblock %}
     </main>
