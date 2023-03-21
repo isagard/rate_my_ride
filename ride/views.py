@@ -54,8 +54,8 @@ def show_services(request, service_name_slug):
     try:
         service = ServicePage.objects.get(slug=service_name_slug)
         review = Review.objects.filter(service=service)
-        context_dict['pages'] = review
-        context_dict['category'] = service
+        context_dict['review'] = review
+        context_dict['service'] = service
     except ServicePage.DoesNotExist:
         context_dict['service'] = None
         context_dict['review'] = None
@@ -67,7 +67,7 @@ def add_service(request):
     form = ServiceForm()
 
     if request.method == 'POST':
-        form = ServiceForm(request.POST)
+        form = ServiceForm(request.POST, request.FILES)
 
         if form.is_valid():
             form.save(commit=True)
@@ -78,10 +78,10 @@ def add_service(request):
     return render(request, 'ride/add_service.html', {'form': form})
 
 @login_required
-def add_review(request, review_name_slug):
+def add_review(request, service_name_slug):
     try:
-        service = Service.objects.get(slug=service_name_slug)
-    except Service.DoesNotExist:
+        service = ServicePage.objects.get(slug=service_name_slug)
+    except ServicePage.DoesNotExist:
         service = None
 
     if service is None:
