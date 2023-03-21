@@ -3,24 +3,53 @@
 
 {% block title_block %}
     Home
-    <img src="{% static 'images/taxi_car.jpg' %}" alt="Picture of Car" />
 {% endblock %}
 
 {% block body_block %}
+    
     <h1></h1>
-    <div>
-        {% if user.is_authenticated %}
-            hiya {{ user.username }}!
-        {% else %}
-            hey there!
-        {% endif %}
-        <br />
-        <strong>{{ boldmessage }}</strong>
+    </br>
+    <div class= "jumbotro p-4">
+        <div class= "w3-container" style="border-bottom: 2px solid rgb(0, 0, 0);" >
+            <h4>
+            {% if user.is_authenticated %}
+                Welcome back {{ user.username }}!
+            {% else %}
+                Welcome to Rate My Ride!
+            {% endif %}
+            </h4>
+        <br/>
+        <div>
+            <h6>
+                Rate My Ride is a rating platform that allows you to share your taxi ride experiences with other users. It is an interactive platform in which users can view and like other customers taxi reviews. Rate My Ride aims to help customers decide what taxi service is best for them and their needs. We provide a list of taxi services in Edinburgh, Glasgow and Aberdeen.
+
+            </h6>
+        </div>
+        </div>
     </div>
-    <div>
-        <h2>Locations</h2>
-        <a href="/ride/glasgow/">Glasgow</a><br />
-        <a href="/ride/edinburgh/">Edinburgh</a><br />
-        <a href="/ride/aberdeen/">Aberdeen</a><br />
+    <div class= "jumbotro p-4">
+        <div class= "w3-container" >
+            <div style="display: flex; align-items: center;">
+                <h1 style="margin-right: auto;">Locations</h1>
+                <h6 style="margin-right: auto;">
+                    <a href="/ride/glasgow/">Glasgow</a><br />
+                    <a href="/ride/edinburgh/">Edinburgh</a><br />
+                    <a href="/ride/aberdeen/">Aberdeen</a><br />                
+                </h6>
+                <img src="{% static 'images/map_of_scotland.png' %}" alt="image" width="300">
+            </div>
+            <!-- <h1>Locations</h1> -->
+        <br/>
+        <!-- <div style="float:right;">
+            <img src="{% static 'images/map_of_scotland.png' %}" alt="image" width="300">
+        </div> -->
+        <div>
+            <!-- <h6>
+                <a href="/ride/glasgow/">Glasgow</a><br />
+                <a href="/ride/edinburgh/">Edinburgh</a><br />
+                <a href="/ride/aberdeen/">Aberdeen</a><br />                
+            </h6> -->
+        </div>
+        </div>
     </div>
 {% endblock %}
