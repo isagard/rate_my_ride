@@ -41,30 +41,3 @@
     </div>
 </section>
 {% endblock %}
-    <!-- <div class="container">
-        <div class="row justify-content-center mt-5">
-            <div class="col-md-6">
-                <div class="card shadow">
-                    <div class="card-body">
-                        <h1 class="text-center mb-4">Register Here!</h1>
-                        {% if registered %}
-                            <div class="alert alert-success text-center" role="alert">
-                                <strong>Thank you for registering!</strong>
-                                <a href="{% url 'ride:home' %}" class="alert-link">Return to the homepage.</a>
-                            </div>
-                        {% else %}
-                            <form id="user_form" method="post" action="{% url 'ride:register' %}" enctype="multipart/form-data">
-                                {% csrf_token %} -->
-                                <!-- Display each form -->
-                                <!-- {{ user_form.as_p }}
-                                {{ profile_form.as_p }} -->
-                                <!-- Provide a button to submit the form -->
-                                <!-- <button type="submit" class="btn btn-primary btn-block mt-3">Register</button>
-                            </form>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-
