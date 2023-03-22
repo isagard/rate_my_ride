@@ -8,7 +8,7 @@ Home
 
 {% block body_block %}
 
-<div class="container my-5">
+<div class="container my-5" >
   <div class="jumbotron bg-light p-4">
     <h1 class="display-4 mb-4">
       {% if user.is_authenticated %}
@@ -18,7 +18,7 @@ Home
       {% endif %}
     </h1>
     <p class="lead">
-      Rate My Ride is a rating platform that allows you to share your taxi ride experiences with other users. It is an interactive platform in which users can view and like other customers' taxi reviews. Rate My Ride aims to help customers decide what taxi service is best for them and their needs. We provide a list of taxi services in Edinburgh, Glasgow, and Aberdeen.
+      Rate My Ride is a rating platform that allows you to share your taxi ride experiences with other users. It is an interactive platform in which users can view and like other customers' taxi reviews. Rate My Ride aims to help customers decide what taxi service is best for them and their needs. We provide a list of taxi services in Glasgow, Edinburgh and Aberdeen.
     </p>
   </div>
 </div>
@@ -30,21 +30,21 @@ Home
       </div>
       <div class="col-md-6">
         <div class="d-flex flex-column">
-          <div class="card mb-3">
+          <div class="card mb-3" style="background-color: rgb(201, 218, 248);">
             <a href="/ride/glasgow/"></a>
             <div class="card-body">
               <h5 class="card-title">Glasgow</h5>
               <a href="/ride/glasgow/" class="btn btn-primary stretched-link">View Rides in Glasgow</a>
             </div>
           </div>
-          <div class="card mb-3">
+          <div class="card mb-3" style="background-color: rgb(201, 218, 248);">
             <a href="/ride/edinburgh/"></a>
             <div class="card-body">
               <h5 class="card-title">Edinburgh</h5>
               <a href="/ride/edinburgh/" class="btn btn-primary stretched-link">View Rides in Edinburgh</a>
             </div>
           </div>
-          <div class="card mb-3">
+          <div class="card mb-3" style="background-color: rgb(201, 218, 248);">
             <a href="/ride/aberdeen/"></a>
             <div class="card-body">
               <h5 class="card-title">Aberdeen</h5>
