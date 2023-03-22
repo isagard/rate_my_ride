@@ -33,6 +33,8 @@ class Review(models.Model):
 	title = models.CharField(max_length=128)
 	body = models.CharField(max_length=256)
 
+	likes = models.ManyToManyField(User, related_name='review_likes', blank=True)
+
 	def __str__(self):
 		return self.title
 

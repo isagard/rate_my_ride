@@ -2,7 +2,7 @@
 # Rate_My_Ride Tests
 # 
 # To run these tests, make sure this module to your rate_my_ride/ride/ directory.
-# Once this is complete, run $ python manage.py test ride.tests_ride.py
+# Once this is complete, run $ python manage.py test ride.tests_ride
 # 
 #
 
