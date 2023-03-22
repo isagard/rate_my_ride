@@ -6,6 +6,9 @@
 {% endblock %}
 
 {% block body_block %}
+</br>
+</br>
+</br>
 {% if user.is_authenticated %}
     <div>
         <form id="review_form" enctype="multipart/form-data" method="post" action="/ride/{{ location }}/{{ service_name_slug.slug }}/add_review/">
