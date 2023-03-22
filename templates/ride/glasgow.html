@@ -9,6 +9,8 @@
     </br>
     <div class= "jumbotro p-4">
     <div class= "w3-container" style="border-bottom: 2px solid rgb(0, 0, 0);" > 
+        <div class="row">
+            <div class="col">
         <h1>Glasgow</h1>
         <div>
             <h3>Services</h3>
@@ -27,9 +29,14 @@
                 <strong>There are no services present.</strong>
             {% endif %}
         </div>
+        </div>
+        <div class="col p-2">
+            <img src="{% static 'images/map_glasgow.png' %}" alt="image" width="100%" style="max-width: 500px;">
+        </div>
+        </div>
     </div>
     </div>  
-    <div class="container">
+    <div class="container pb-4" style="border-bottom: 2px solid rgb(0, 0, 0);">
         <div class="row">
             <div class="col-md-6">
                 <div class="card mb-6" style="background-color: rgb(201, 218, 248);">

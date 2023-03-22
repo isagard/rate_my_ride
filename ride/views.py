@@ -22,6 +22,7 @@ def glasgow(request):
     city_dict['boldmessage'] = 'This is the Glasgow page'
     city_dict['services'] = service_list
     city_dict['location'] = 'glasgow'
+    city_dict['visits'] = request.session['visits']
     
     visitor_cookie_handler(request)
 
@@ -34,6 +35,7 @@ def edinburgh(request):
     city_dict['boldmessage'] = 'This is the Edinburgh page'
     city_dict['services'] = service_list
     city_dict['location'] = 'edinburgh'
+    city_dict['visits'] = request.session['visits']
     
     visitor_cookie_handler(request)
     
@@ -46,6 +48,7 @@ def aberdeen(request):
     city_dict['boldmessage'] = 'This is the Aberdeen page'
     city_dict['services'] = service_list
     city_dict['location'] = 'aberdeen'
+    city_dict['visits'] = request.session['visits']
     
     visitor_cookie_handler(request)
     
