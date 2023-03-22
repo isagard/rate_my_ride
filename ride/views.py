@@ -82,7 +82,7 @@ def add_service(request, location):
         else:
             print(form.errors)
 
-    return render(request, 'ride/add_service.html', {'form': form}, location)
+    return render(request, 'ride/add_service.html', {'form': form, 'location': location})
 
 @login_required
 def add_review(request, service_name_slug):

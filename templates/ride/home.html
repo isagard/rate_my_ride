@@ -1,55 +1,59 @@
 {% extends 'ride/base.html' %}
-{% load staticfiles %}
+
+{% load static %}
 
 {% block title_block %}
-    Home
+Home
 {% endblock %}
 
 {% block body_block %}
-    
-    <h1></h1>
-    </br>
-    <div class= "jumbotro p-4">
-        <div class= "w3-container" style="border-bottom: 2px solid rgb(0, 0, 0);" >
-            <h4>
-            {% if user.is_authenticated %}
-                Welcome back {{ user.username }}!
-            {% else %}
-                Welcome to Rate My Ride!
-            {% endif %}
-            </h4>
-        <br/>
-        <div>
-            <h6>
-                Rate My Ride is a rating platform that allows you to share your taxi ride experiences with other users. It is an interactive platform in which users can view and like other customers taxi reviews. Rate My Ride aims to help customers decide what taxi service is best for them and their needs. We provide a list of taxi services in Edinburgh, Glasgow and Aberdeen.
 
-            </h6>
-        </div>
-        </div>
-    </div>
-    <div class= "jumbotro p-4">
-        <div class= "w3-container" >
-            <div style="display: flex; align-items: center;">
-                <h1 style="margin-right: auto;">Locations</h1>
-                <h6 style="margin-right: auto;">
-                    <a href="/ride/glasgow/">Glasgow</a><br />
-                    <a href="/ride/edinburgh/">Edinburgh</a><br />
-                    <a href="/ride/aberdeen/">Aberdeen</a><br />                
-                </h6>
-                <img src="{% static 'images/map_of_scotland.png' %}" alt="image" width="300">
+<div class="container my-5">
+  <div class="jumbotron bg-light p-4">
+    <h1 class="display-4 mb-4">
+      {% if user.is_authenticated %}
+        Welcome back, {{ user.username }}!
+      {% else %}
+        Welcome to Rate My Ride!
+      {% endif %}
+    </h1>
+    <p class="lead">
+      Rate My Ride is a rating platform that allows you to share your taxi ride experiences with other users. It is an interactive platform in which users can view and like other customers' taxi reviews. Rate My Ride aims to help customers decide what taxi service is best for them and their needs. We provide a list of taxi services in Edinburgh, Glasgow, and Aberdeen.
+    </p>
+  </div>
+</div>
+<div class="container my-5">
+    <h2 class="text-center mb-5">Locations</h2>
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <img src="{% static 'images/map_of_scotland.png' %}" alt="image" width="100%" style="max-width: 500px;">
+      </div>
+      <div class="col-md-6">
+        <div class="d-flex flex-column">
+          <div class="card mb-3">
+            <a href="/ride/glasgow/"></a>
+            <div class="card-body">
+              <h5 class="card-title">Glasgow</h5>
+              <a href="/ride/glasgow/" class="btn btn-primary stretched-link">View Rides in Glasgow</a>
             </div>
-            <!-- <h1>Locations</h1> -->
-        <br/>
-        <!-- <div style="float:right;">
-            <img src="{% static 'images/map_of_scotland.png' %}" alt="image" width="300">
-        </div> -->
-        <div>
-            <!-- <h6>
-                <a href="/ride/glasgow/">Glasgow</a><br />
-                <a href="/ride/edinburgh/">Edinburgh</a><br />
-                <a href="/ride/aberdeen/">Aberdeen</a><br />                
-            </h6> -->
+          </div>
+          <div class="card mb-3">
+            <a href="/ride/edinburgh/"></a>
+            <div class="card-body">
+              <h5 class="card-title">Edinburgh</h5>
+              <a href="/ride/edinburgh/" class="btn btn-primary stretched-link">View Rides in Edinburgh</a>
+            </div>
+          </div>
+          <div class="card mb-3">
+            <a href="/ride/aberdeen/"></a>
+            <div class="card-body">
+              <h5 class="card-title">Aberdeen</h5>
+              <a href="/ride/aberdeen/" class="btn btn-primary stretched-link">View Rides in Aberdeen</a>
+            </div>
+          </div>
         </div>
-        </div>
+      </div>
     </div>
+</div>
+
 {% endblock %}
