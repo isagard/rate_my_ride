@@ -7,7 +7,41 @@
 {% endblock %}
 
 {% block body_block %}
-    <div class="container">
+<section class="gradient-custom">
+    <div class="container py-5 h-50">
+    <div class="row d-flex justify-content-center align-items-center h-50">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card cardcolour text-white" style="border-radius: 1rem;">
+            <div class="card-body p-5 text-center">
+
+            <div class="mb-md-5 mt-md-4 pb-5">
+                <h2 class="fw-bold mb-2 text-uppercase">Register here!</h2>
+                        {% if registered %}
+                            <div class="alert alert-success text-center" role="alert">
+                                <strong>Thank you for registering!</strong>
+                                <a href="{% url 'ride:home' %}" class="alert-link">Return to the homepage.</a>
+                            </div>
+                        {% else %}
+                            <form id="user_form" method="post" action="{% url 'ride:register' %}" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <p class="text-white-50 mb-5">Please enter your details!</p>
+                                <!-- Display each form -->
+                                {{ user_form.as_p }}
+                                {{ profile_form.as_p }}
+                                <!-- Provide a button to submit the form -->
+                                <input class="btn btn-outline-light btn-lg px-5" type="submit" value="Register">
+                                <!-- # <button type="submit" class="btn btn-primary btn-block mt-3">Register</button> -->
+                            </form>
+                        {% endif %}
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+</section>
+{% endblock %}
+    <!-- <div class="container">
         <div class="row justify-content-center mt-5">
             <div class="col-md-6">
                 <div class="card shadow">
@@ -20,17 +54,17 @@
                             </div>
                         {% else %}
                             <form id="user_form" method="post" action="{% url 'ride:register' %}" enctype="multipart/form-data">
-                                {% csrf_token %}
+                                {% csrf_token %} -->
                                 <!-- Display each form -->
-                                {{ user_form.as_p }}
-                                {{ profile_form.as_p }}
+                                <!-- {{ user_form.as_p }}
+                                {{ profile_form.as_p }} -->
                                 <!-- Provide a button to submit the form -->
-                                <button type="submit" class="btn btn-primary btn-block mt-3">Register</button>
+                                <!-- <button type="submit" class="btn btn-primary btn-block mt-3">Register</button>
                             </form>
                         {% endif %}
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-{% endblock %}
+    </div> -->
+
