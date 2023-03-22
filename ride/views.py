@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from ride.forms import ServiceForm
 from ride.forms import ReviewForm
 from ride.forms import UserForm, UserProfileForm
-from ride.models import ServicePage, Review
+from ride.models import ServicePage, Review, User, UserProfile
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from datetime import datetime
@@ -56,13 +56,14 @@ def show_services(request, service_name_slug, location):
 
     try:
         service = ServicePage.objects.get(slug=service_name_slug)
-        review = Review.objects.filter(service=service)
-        context_dict['review'] = review
+        reviews = Review.objects.filter(service=service)
+        context_dict['reviews'] = reviews
         context_dict['service'] = service
         context_dict['location'] = location
+        context_dict['service_name_slug'] = service_name_slug
     except ServicePage.DoesNotExist:
         context_dict['service'] = None
-        context_dict['review'] = None
+        context_dict['reviews'] = None
         context_dict['location'] = location
 
     return render(request, 'ride/service.html', context=context_dict)
@@ -85,13 +86,17 @@ def add_service(request, location):
     return render(request, 'ride/add_service.html', {'form': form, 'location': location})
 
 @login_required
-def add_review(request, service_name_slug):
+def add_review(request, service_name_slug, location):
     try:
-        service = ServicePage.objects.get(slug=service_name_slug)
-    except ServicePage.DoesNotExist:
-        service = None
+        # serviceName = service_name_slug
+        serviceName = ServicePage.objects.get(slug=service_name_slug)
+        serviceID = ServicePage.objects.get(slug=service_name_slug)
+        userID = User.objects.get(id=request.user.id)
 
-    if service is None:
+    except ServicePage.DoesNotExist:
+        serviceName = None
+
+    if serviceName is None:
         return redirect('/ride/')
 
     form = ReviewForm()
@@ -100,17 +105,19 @@ def add_review(request, service_name_slug):
         form = ReviewForm(request.POST)
 
         if form.is_valid():
-            if service:
+            if serviceName:
                 review = form.save(commit=False)
-                review.service = service
+                review.service = serviceName
+                review.userID = userID
+                review.serviceID = serviceID
                 review.views = 0
                 review.save()
 
-                return redirect(reverse('ride:show_services',kwargs={'service_name_slug':service_name_slug}))
+                return redirect(reverse('ride:show_services', kwargs={'service_name_slug':service_name_slug, 'location': location}))
     else:
         print(form.errors)
 
-        context_dict = {'form': form, 'service': service}
+        context_dict = {'form': form, 'service_name_slug': serviceName, 'location': location}
         return render(request, 'ride/add_review.html', context=context_dict)
 
 def register(request):
@@ -171,7 +178,7 @@ def get_server_side_cookie(request, cookie, default_val=None):
 
 @login_required
 def restricted(request):
-    return render(request, 'rango/restricted.html')
+    return render(request, 'ride/restricted.html')
 
 def visitor_cookie_handler(request):
     visits = int(get_server_side_cookie(request, 'visits', '1'))

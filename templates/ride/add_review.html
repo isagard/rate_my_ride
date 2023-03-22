@@ -11,7 +11,7 @@
 </br>
 {% if user.is_authenticated %}
     <div>
-        <form id="review_form" enctype="multipart/form-data" method="post" action="/ride/{{ location }}/{{ service_name_slug.slug }}/add_review/">
+        <form id="review_form" enctype="multipart/form-data" method="post" action="{% url 'ride:add_review' location service_name_slug.slug %}">
             {% csrf_token %}
             {% for hidden in form.hidden_fields %}
                 {{ hidden }}
