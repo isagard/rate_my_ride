@@ -25,6 +25,7 @@ urlpatterns = [
     path('glasgow/', views.glasgow, name='glasgow'),
     path('edinburgh/', views.edinburgh, name='edinburgh'),
     path('aberdeen/', views.aberdeen, name='aberdeen'),
+    # path('<str:location>/add_service/', views.add_service, name='add_service'),
     path('ride/', include('ride.urls')),
     # The above maps any URLs starting with rate_my_ride/ to be handled by ride.
     path('admin/', admin.site.urls),

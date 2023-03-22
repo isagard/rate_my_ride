@@ -4,39 +4,76 @@
 {% block title_block %}
     Edinburgh
 {% endblock %}
-
-{% block body_block %}    
-    <h1>Edinburgh</h1>
-    <div>
-    {% if services %}
-        <h2>Most Liked Services</h2>
-        <ul>
-            {% for service in services %}
-                <li>
-                    <a href="{% url 'ride:show_services' location service.slug %}">
-                        {{ service.name }}
-                    </a>
-                </li>
+{% block body_block %}   
+    </br>
+    <div class= "jumbotro p-4">
+    <div class= "w3-container" style="border-bottom: 2px solid rgb(0, 0, 0);" > 
+        <h1>Edinburgh</h1>
+        <div>
+        <h3>Services</h3>
+        {% if services %}
+            <h2>Most Liked Services</h2>
+            <ul>
+                {% for service in services %}
+                    <li>
+                        <a href="{% url 'ride:show_services' location service.slug %}">
+                            {{ service.name }}
+                        </a>
+                    </li>
                 {% endfor %}
-        </ul>
-    {% else %}
-        <strong>There are no services present.</strong>
-    {% endif %}
+            </ul>
+        {% else %}
+            <strong>There are no services present.</strong>
+        {% endif %}
+        </div>
     </div>
-    <div>
-    {% if reviews %}
-        <h2>Most Viewed Reviews</h2>
-        <ul>
-            {% for review in reviews %}
-            <li><a href="{{ review.url }}">{{ review.title }}</a></li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <strong>There are no reviews present.</strong>
-    {% endif %}
+    </div>  
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6" >
+                <div class="card mb-6" style="background-color: rgb(201, 218, 248);">
+                    <div class="card-body">
+                        <h2>Most Viewed Reviews</h2>
+                        <p class="card-text">
+                        {% if reviews %}
+                        <ul>
+                        {% for review in reviews %}
+                            <li><a href="{{ review.url }}">{{ review.title }}</a></li>
+                        {% endfor %}
+                        </ul>
+                        {% else %}
+                        <strong>There are no reviews present.</strong>
+                        {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card mb-6" style="background-color: rgb(201, 218, 248);">
+                    <div class="card-body">
+                        <h2>Most Liked Reviews</h2>
+                        <p class="card-text">
+                        {% if reviews %}
+                        <ul>
+                        {% for review in reviews %}
+                            <li>
+                                <li><a href="{{ review.url }}">{{ review.title }}</a></li>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                        {% else %}
+                        <strong>There are no reviews present.</strong>
+                        {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div>
-        <h3>Add Service</h3>
-        <a href="/ride/{{ location }}/add_service/">Add a New Service</a><br />
-    </div>
+
+        <div>
+            <h3>Add Service</h3>
+            <a href="/ride/{{ location }}/add_service/">Add a New Service</a><br />
+        </div>
+    
 {% endblock %}

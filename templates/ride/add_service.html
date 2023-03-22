@@ -6,6 +6,9 @@
 {% endblock %}
 
 {% block body_block %}
+</br>
+</br>
+</br>
 {% if user.is_authenticated %}
     <div>
         <form id="service_form" enctype="multipart/form-data" method="post" action="{% url 'ride:add_service' location %}">
