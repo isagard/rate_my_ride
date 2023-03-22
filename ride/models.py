@@ -13,7 +13,7 @@ class ServicePage(models.Model):
 	slug = models.SlugField(unique=True, blank=True)
 
 	def save(self, *args, **kwargs):
-		self.slug = slugify(self.name)
+		self.slug = slugify(self.name+"_"+self.location)
 		super(ServicePage, self).save(*args, **kwargs)
 
 	def __str__(self): 
