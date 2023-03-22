@@ -13,7 +13,7 @@
         <ul>
             {% for service in services %}
                 <li>
-                    <a href="{% url 'ride:show_service' service.slug context_dict.location %}">
+                    <a href="{% url 'ride:show_services' location service.slug %}">
                         {{ service.name }}
                     </a>
                 </li>

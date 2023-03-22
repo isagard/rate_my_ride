@@ -4,12 +4,12 @@
             {% if s == current_service %}
             <li>
             <strong>
-                <a href="{% url 'ride:show_service' s.slug context_dict.location %}">{{ s.name }}</a>
+                <a href="{% url 'ride:show_service' s.slug location %}">{{ s.name }}</a>
             </strong>
             </li>
             {% else %}
             <li>
-                <a href="{% url 'ride:show_service' s.slug context_dict.location %}">{{ s.name }}</a>
+                <a href="{% url 'ride:show_service' s.slug location %}">{{ s.name }}</a>
             </li>
             {% endif %}
         {% endfor %}

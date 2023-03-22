@@ -22,7 +22,7 @@
             <strong>No reviews currently in service.</strong>
         {% endif %}
         
-        <a href="{% url 'ride:add_review' service.slug context_dict.location %}">Add Review</a> <br />
+        <a href="{% url 'ride:add_review' location service.slug %}">Add Review</a> <br />
     {% else %}
         The specified service does not exist.
     {% endif %}
