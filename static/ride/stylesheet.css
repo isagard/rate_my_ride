@@ -1,13 +1,42 @@
 h1 {
-    font-size: 16pt;
-    font-style: italic;
-    text-align: center;
+    font-size: 30pt;
+    font-style:normal;
+    text-align:left;
     color:black;
     font-family: 'Arial', 'Helvetica', sans-serif;
 }
 
+.middle {
+    text-align: center;
+}
+
 body {
-    background-color:darkseagreen;
+    /* fallback for old browsers */
+    background: #8bdcec;
+
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, rgb(118, 204, 224), rgb(136, 215, 219));
+
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, rgb(118, 204, 224), rgb(136, 215, 219));
+} 
+
+.right{
+    float:right;
+    padding: 15PX;
+    height: fit-content;
+}
+.footerdiv{
+    display: inline;
+    height: fit-content;
+}
+.left{
+    padding: 15px;
+    float: left;
+    height: fit-content;
+}
+footer{
+    height:41px;
 }
 
 .sample-list {
@@ -19,7 +48,7 @@ body {
 }
 
 a {
-    color:#FFFFFF;
+    color:black;
     text-decoration: none;
 }
 
@@ -28,16 +57,23 @@ a:hover {
     text-decoration: underline;
 }
 
-.inner-row{
-    height: 100vh;
+.gradient-custom {
+    /* fallback for old browsers */
+    background: #8bdcec;
+
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, rgb(118, 204, 224), rgb(136, 215, 219));
+
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, rgb(118, 204, 224), rgb(136, 215, 219));
 }
 
-.primaryBg{
-    background: #96c9d4;
+.cardcolour {
+    background: rgb(91, 177, 157);
 }
 
-.primaryColor{
-    color:aquamarine;
+li {
+    color:#333333; 
 }
     
         
