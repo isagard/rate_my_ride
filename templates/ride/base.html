@@ -38,13 +38,13 @@
 
         body {
             /* fallback for old browsers */
-            background: #8bdcec;
+            background: #a4c2f4;
 
             /* Chrome 10-25, Safari 5.1-6 */
-            background: -webkit-linear-gradient(to right, rgb(118, 204, 224), rgb(136, 215, 219));
+            background: -webkit-linear-gradient(to right, rgb(164, 194, 244), rgb(164, 194, 244));
 
             /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-            background: linear-gradient(to right, rgb(118, 204, 224), rgb(136, 215, 219));
+            background: linear-gradient(to right, rgb(164, 194, 244), rgb(164, 194, 244));
         } 
 
         .right{
@@ -85,17 +85,17 @@
 
         .gradient-custom {
             /* fallback for old browsers */
-            background: #8bdcec;
+            background: 207, 226, 243;
 
             /* Chrome 10-25, Safari 5.1-6 */
-            background: -webkit-linear-gradient(to right, rgb(118, 204, 224), rgb(136, 215, 219));
+            background: -webkit-linear-gradient(to right, rgb(207, 226, 243), rgb(207, 226, 243));
 
             /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-            background: linear-gradient(to right, rgb(118, 204, 224), rgb(136, 215, 219));
+            background: linear-gradient(to right, rgb(207, 226, 243), rgb(207, 226, 243));
         }
 
         .cardcolour {
-            background: rgb(91, 177, 157);
+            background: rgb(74, 134, 232);
         }
     
         li {
@@ -105,7 +105,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-md fixed-top p-0" style="background-color: rgb(118,204,224);">
+        <nav class="navbar navbar-expand-md fixed-top p-0" style="background-color: rgb(164, 194, 244);">
             <img src="{% static 'images/taxi.png' %}" alt="Taxi" class="img-fluid" style="width: 150px; height: auto;">
             <a class="navbar-brand p-2" href="{% url 'ride:home' %}">Rate My Ride</a>
     
@@ -135,7 +135,7 @@
     </header>
     
     <nav class="col-md-2 d-none d-md-block sidebar">
-        <div class="sidebar-sticky">
+        <div class="sidebar-sticky" style="background-color: rgb(201, 218, 248);">
             <ul class="navbar-nav mr-auto p-4">
                 <li class="nav-item">
                     <a class="nav-link text-dark" href="{% url 'ride:glasgow' %}">Glasgow</a></li>
@@ -146,7 +146,7 @@
             </ul>
         </div>
     </nav>
-    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" style="background-color: rgb(91, 177, 157);">
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" style="background-color: rgb(207, 226, 243);">
         {% block body_block %}
         {% endblock %}
     </main>
