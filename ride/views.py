@@ -232,18 +232,18 @@ def visitor_cookie_handler(request):
 #         context_dict = {'form': form, 'errors': form.errors}
 #     return render(request, 'ride/profile_registration.html', context_dict)
 
-def goto_url(request):
-    if request.method == 'GET':
-        review_id = request.GET.get('review_id')
-        try:
-            selected_review = Review.objects.get(id=review_id)
-        except Review.DoesNotExist:
-            return redirect(reverse('ride:home'))
-        selected_review.views = selected_review.views + 1
-        selected_review.save()
-        return redirect(selected_review.url)
+# def goto_url(request):
+#     if request.method == 'GET':
+#         review_id = request.GET.get('review_id')
+#         try:
+#             selected_review = Review.objects.get(id=review_id)
+#         except Review.DoesNotExist:
+#             return redirect(reverse('ride:home'))
+#         selected_review.views = selected_review.views + 1
+#         selected_review.save()
+#         return redirect(selected_review.url)
     
-    return redirect(reverse('ride:home'))
+#     return redirect(reverse('ride:home'))
 
 # class ProfileView(View):
 #     def get_user_details(self, username):

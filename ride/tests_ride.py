@@ -129,13 +129,3 @@ class UserProfileTest(TestCase):
     def test_userprofile_picture_field(self):
         user_profile = UserProfile.objects.get(user__username='Test User')
         self.assertEqual(user_profile.picture.url, '/media/', f"{FAILURE_HEADER}Test user profile picture failed.{FAILURE_FOOTER}")
-
-
-
-
-
-
-
-
-
-
