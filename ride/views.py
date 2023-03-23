@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.urls import reverse
-from django.http import HttpResponse 
+from django.http import HttpResponse
 from ride.forms import ServiceForm
 from ride.forms import ReviewForm
 from ride.forms import UserForm, UserProfileForm
