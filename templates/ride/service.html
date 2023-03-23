@@ -21,18 +21,18 @@
             <ul>
                 {% for review in reviews %}
                     <h2>Review Information</h2>
-                    <p><strong>Title:</strong> {{ review.title.value }}</p>
-                    <p><strong>Rating:</strong> {{ review.rating.value }}</p>
-                    <p><strong>Location:</strong> {{ review.location.value }}</p>
-                    <p><strong>Body:</strong> {{ review.body.value }}</p>
-                    <p><strong>Service:</strong> {{ review.service.value }}</p>
-                    <li><a href="{{ review.url }}">{{ review.title }}</a></li>
+                    <p><strong>Title:</strong> {{ review.title }}</p>
+                    <p><strong>Rating:</strong> {{ review.rating }}</p>
+                    <p><strong>Location:</strong> {{ review.location }}</p>
+                    <p><strong>Body:</strong> {{ review.body }}</p>
+                    <p><strong>Service:</strong> {{ review.service }}</p>
                 {% endfor %}
             </ul>
             {% else %}
                 <strong>No reviews currently in service.</strong>
             {% endif %}
             {% if user.is_authenticated %}
+            
                 <a href="{% url 'ride:add_review' location service.slug %}">Add Review</a> <br />
             {% endif %}
         {% else %}

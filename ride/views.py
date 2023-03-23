@@ -47,22 +47,25 @@ def aberdeen(request):
 
     city_dict = {}
     city_dict['services'] = service_list
-    city_dict['loaction'] = "aberdeen"
+    city_dict['location'] = "aberdeen"
     
     visitor_cookie_handler(request)
     
     return render(request, 'ride/aberdeen.html', context=city_dict)
 
 def show_services(request, service_name_slug, location):
-    context_dict = {}
 
+    user = request.user
+    user_profile = UserProfile.objects.get(user=user)
+    account_user = user_profile.accountUser
+
+    context_dict = {}
+    context_dict['account_user'] = account_user
+    
     try:
         service = ServicePage.objects.get(slug=service_name_slug)
-        try:
-            reviews = Review.objects.get(service)
-            context_dict['reviews'] = reviews
-        except:
-            context_dict['reviews'] = None
+        reviews = Review.objects.filter(service=service)
+        context_dict['reviews'] = reviews
         context_dict['service'] = service
         context_dict['location'] = location
         context_dict['service_name_slug'] = service_name_slug
@@ -70,24 +73,32 @@ def show_services(request, service_name_slug, location):
         context_dict['service'] = None
         context_dict['reviews'] = None
         context_dict['location'] = location
-
+        
     return render(request, 'ride/service.html', context=context_dict)
 
 @login_required
 def add_service(request, location):
-    form = ServiceForm()
-    # context_dict = {}
-    # context_dict['location'] = location
 
-    if request.method == 'POST':
-        form = ServiceForm(request.POST, request.FILES)
+    user = request.user
+    user_profile = UserProfile.objects.get(user=user)
+    account_user = user_profile.accountUser
 
-        if form.is_valid():
-            form.save(commit=True)
-            return redirect('/ride/')
-        else:
-            print(form.errors)
+    if account_user == False:
+        form = ServiceForm()
+        # context_dict = {}
+        # context_dict['location'] = location
 
+        if request.method == 'POST':
+            form = ServiceForm(request.POST, request.FILES)
+
+            if form.is_valid():
+                form.save(commit=True)
+                return redirect('/ride/')
+            else:
+                print(form.errors)
+    else:
+        return render(request, 'ride/restricted.html')
+    
     return render(request, 'ride/add_service.html', {'form': form, 'location': location})
 
 @login_required
