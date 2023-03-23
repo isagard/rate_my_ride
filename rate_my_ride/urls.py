@@ -23,10 +23,6 @@ from registration.backends.simple.views import RegistrationView
 from django.urls import reverse
 
 
-# class MyRegistrationView(RegistrationView):
-#     def get_success_url(self, user):
-#         return reverse('ride:register_profile')
-
 urlpatterns = [
     path('', views.home, name='home'),
     path('glasgow/', views.glasgow, name='glasgow'),
@@ -36,6 +32,4 @@ urlpatterns = [
     # The above maps any URLs starting with rate_my_ride/ to be handled by ride.
     path('admin/', admin.site.urls),
     path('accounts/login/', views.user_login, name='login'),
-    # path('accounts/register/', MyRegistrationView.as_view(), name='registration_register'),
-    # path('accounts/', include('registration.backends.simple.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 

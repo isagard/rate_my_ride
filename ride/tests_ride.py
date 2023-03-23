@@ -106,20 +106,6 @@ class ServicePageTest(TestCase):
         service = ServicePage.objects.get(name='Test Service')
         self.assertEqual(service.slug, 'test-service', f"{FAILURE_HEADER}Test service page failed.{FAILURE_FOOTER}")
 
-class ReviewTest(TestCase):
-
-    def setUp(self):
-        user = User.objects.create(username='Test User')
-        service = ServicePage.objects.create(name='Test Service', location='Test Location', body='Test Body')
-        Review.objects.create(serviceID=service, userID=user, location='Test Location', service='Test Service',
-                              rating=5, title='Test Title', body='Test Body')
-
-    def test_review_likes_field(self):
-        review = Review.objects.get(title='Test Title')
-        user = User.objects.create(username='Test User 2')
-        review.likes.add(user)
-        self.assertEqual(review.likes.count(), 1, f"{FAILURE_HEADER}Test review likes failed.{FAILURE_FOOTER}")
-
 class UserProfileTest(TestCase):
 
     def setUp(self):

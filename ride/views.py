@@ -54,8 +54,14 @@ def aberdeen(request):
     return render(request, 'ride/aberdeen.html', context=city_dict)
 
 def show_services(request, service_name_slug, location):
-    context_dict = {}
 
+    user = request.user
+    user_profile = UserProfile.objects.get(user=user)
+    account_user = user_profile.accountUser
+
+    context_dict = {}
+    context_dict['account_user'] = account_user
+    
     try:
         service = ServicePage.objects.get(slug=service_name_slug)
         reviews = Review.objects.filter(service=service)
@@ -67,23 +73,32 @@ def show_services(request, service_name_slug, location):
         context_dict['service'] = None
         context_dict['reviews'] = None
         context_dict['location'] = location
+        
     return render(request, 'ride/service.html', context=context_dict)
 
 @login_required
 def add_service(request, location):
-    form = ServiceForm()
-    # context_dict = {}
-    # context_dict['location'] = location
 
-    if request.method == 'POST':
-        form = ServiceForm(request.POST, request.FILES)
+    user = request.user
+    user_profile = UserProfile.objects.get(user=user)
+    account_user = user_profile.accountUser
 
-        if form.is_valid():
-            form.save(commit=True)
-            return redirect('/ride/')
-        else:
-            print(form.errors)
+    if account_user == False:
+        form = ServiceForm()
+        # context_dict = {}
+        # context_dict['location'] = location
 
+        if request.method == 'POST':
+            form = ServiceForm(request.POST, request.FILES)
+
+            if form.is_valid():
+                form.save(commit=True)
+                return redirect('/ride/')
+            else:
+                print(form.errors)
+    else:
+        return render(request, 'ride/restricted.html')
+    
     return render(request, 'ride/add_service.html', {'form': form, 'location': location})
 
 @login_required
@@ -120,13 +135,6 @@ def add_review(request, service_name_slug, location):
 
         context_dict = {'form': form, 'service_name_slug': serviceName, 'location': location}
         return render(request, 'ride/add_review.html', context=context_dict)
-
-@login_required
-def like_review(request, review_id):
-    review = Review.objects.get(id=review_id)
-    review.likes += 1
-    review.save()
-    return redirect(reverse('ride:show_services', kwargs={'service_name_slug': review.service.slug, 'location': review.service.location}))
 
 def register(request):
     registered = False

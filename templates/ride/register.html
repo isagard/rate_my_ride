@@ -24,34 +24,12 @@
                             <form id="user_form" method="post" action="{% url 'ride:register' %}" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <p class="text-white-50 mb-5">Please enter your details!</p>
-                                <div class="form-group">
-                                    <p class="required"><label class="required" for="id_username">
-                                        Username:</label>
-                                        <input class="form-control" id="id_username" maxlength="30"
-                                        name="username" type="text" />
-                                        <span class="helptext">
-                                            Required. 30 characters or fewer.
-                                            Letters, digits and @/./+/-/_ only.
-                                        </span>
-                                    </p>
-                                    <p class="required"><label class="required" for="id_email">
-                                        E-mail:</label>
-                                        <input class="form-control" id="id_email" name="email" type="email" />
-                                    </p>
-                                    <p class="required"><label class="required" for="id_password1">
-                                        Password:</label>
-                                        <input class="form-control" id="id_password1" name="password1" type="password" />
-                                    </p>
-                                    <p class="required">
-                                        <label class="required" for="id_password2">
-                                            Password confirmation:</label>
-                                            <input class="form-control" id="id_password2" name="password2" type="password" />
-                                            <span class="helptext">
-                                                Enter the same password as before, for verification.
-                                            </span>
-                                    </p>
-                                </div>
+                                <!-- Display each form -->
+                                {{ user_form.as_p }}
+                                {{ profile_form.as_p }}
+                                <!-- Provide a button to submit the form -->
                                 <input class="btn btn-outline-light btn-lg px-5" type="submit" value="Register">
+                            </form>
                         {% endif %}
             </div>
             </div>
