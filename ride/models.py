@@ -13,7 +13,7 @@ class ServicePage(models.Model):
 	slug = models.SlugField(unique=True, blank=True)
 
 	def save(self, *args, **kwargs):
-		self.slug = slugify(self.name)
+		self.slug = slugify(self.name+"_"+self.location)
 		super(ServicePage, self).save(*args, **kwargs)
 
 	def __str__(self): 
@@ -32,6 +32,9 @@ class Review(models.Model):
 	rating = models.IntegerField(default=0)
 	title = models.CharField(max_length=128)
 	body = models.CharField(max_length=256)
+
+	views = models.IntegerField(default=0)
+	likes = models.ManyToManyField(User, related_name='review_likes', blank=True)
 
 	def __str__(self):
 		return self.title

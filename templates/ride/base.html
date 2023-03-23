@@ -105,13 +105,21 @@
         .jumbotron {
             background-color: rgb(201, 218, 248);
         }
+
+        .nav_title {
+            height :max-content;
+            background-color: transparent;
+            font-size: xx-large;
+            color: #333333;
+        }
+
     </style>
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-md fixed-top p-0" style="background-color: rgb(164, 194, 244);">
             <img src="{% static 'images/taxi.png' %}" alt="Taxi" class="img-fluid" style="width: 150px; height: auto;">
-            <a class="navbar-brand p-2" href="{% url 'ride:home' %}">Rate My Ride</a>
+            <a class="p-2 nav_title nav-link text-dark" href="{% url 'ride:home' %}">Rate My Ride</a>
     
             <button class="navbar-toggler" type="button" data-toggle="collapse"
                 data-target="#navbarCollapse" aria-controls="navbarCollapse"
@@ -120,7 +128,7 @@
             </button>
     
             <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
-                <ul class="navbar-nav p-4">
+                <ul class="navbar-nav p-4 ">
                     {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link text-dark" href="{% url 'ride:logout' %}?next=/ride/">Logout</a>

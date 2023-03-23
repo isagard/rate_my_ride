@@ -15,15 +15,34 @@
         {% if reviews %}
         <ul>
             {% for review in reviews %}
-                <li>
+                <!-- <li>
                 <a href="{% url 'ride:goto' %}?review_id={{ review.id }}">{{ review.title }}</a>
                 {% if review.views > 1 %}
                     ({{ review.views }} views)
                 {% elif review.views == 1 %}
                     ({{ review.views }} view)
                 {% endif %}
-                </li>
+                </li> -->
                 <!-- <li><a href="{{ review.url }}">{{ review.title }}</a></li> -->
+                <li><a href="{{ review.url }}">{{ review.title }}</a></li>
+                <form id="like-review-form" action="{% url 'ride:like_review' review.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">Like</button>
+                </form>
+                <script>
+                $(document).ready(function() {
+                    $('#like-review-form').submit(function(e) {
+                        e.preventDefault();
+                        $.ajax({
+                            type: 'POST',
+                            url: $(this).attr('action'),
+                            data: $(this).serialize(),
+                            success: function(response) {
+                            }
+                        });
+                    });
+                });
+                </script>
             {% endfor %}
         </ul>
         {% else %}

@@ -27,6 +27,7 @@ def glasgow(request):
     city_dict['boldmessage'] = 'This is the Glasgow page'
     city_dict['services'] = service_list
     city_dict['location'] = 'glasgow'
+    city_dict['visits'] = request.session['visits']
     
     visitor_cookie_handler(request)
 
@@ -39,6 +40,7 @@ def edinburgh(request):
     city_dict['boldmessage'] = 'This is the Edinburgh page'
     city_dict['services'] = service_list
     city_dict['location'] = 'edinburgh'
+    city_dict['visits'] = request.session['visits']
     
     visitor_cookie_handler(request)
     
@@ -51,6 +53,7 @@ def aberdeen(request):
     city_dict['boldmessage'] = 'This is the Aberdeen page'
     city_dict['services'] = service_list
     city_dict['location'] = 'aberdeen'
+    city_dict['visits'] = request.session['visits']
     
     visitor_cookie_handler(request)
     
@@ -124,6 +127,13 @@ def add_review(request, service_name_slug, location):
 
         context_dict = {'form': form, 'service_name_slug': serviceName, 'location': location}
         return render(request, 'ride/add_review.html', context=context_dict)
+
+@login_required
+def like_review(request, review_id):
+    review = Review.objects.get(id=review_id)
+    review.likes += 1
+    review.save()
+    return redirect(reverse('ride:show_services', kwargs={'service_name_slug': review.service.slug, 'location': review.service.location}))
 
 def register(request):
     registered = False
