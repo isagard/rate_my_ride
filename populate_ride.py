@@ -18,13 +18,13 @@ def populate():
     user3 = User.objects.create_user(username='user003', email='user003@example.com', password='password')
     user4 = User.objects.create_user(username='user004', email='user004@example.com', password='password')
 
-    glasgow_reviews = {'Uber':{'userID':user1.id,'location':'glasgow','service':'Uber','rating':5,'title':'my experience','body':'my experience was great'},
-                        'GlasGo':{'userID':user3.id,'location':'glasgow','service':'GlasGo','rating':1,'title':'my experience','body':'my experience was bad'},
-                        'BlackCabs':{'userID':user1.id,'location':'glasgow','service':'BlackCabs','rating':3,'title':'my experience','body':'my experience was good'}}
-    edinburgh_reviews = {'Uber':{'userID':user2.id,'location':'edinburgh','service':'Uber','rating':5,'title':'my experience','body':'my experience was great'},
-                        'EdinburghCityTaxis':{'userID':user4.id,'location':'glasgow','service':'EdinburghCityTaxis','rating':3,'title':'my experience','body':'my experience was ok'},
-                        'BlackCabs':{'userID':user2.id,'location':'edinburgh','service':'BlackCabs','rating':4,'title':'my experience','body':'my experience was good'}}
-    aberdeen_reviews = {'Uber':{'userID':user4.id,'location':'aberdeen','service':'Uber','rating':5,'title':'my experience','body':'my experience was great'}}
+    glasgow_reviews = {'Uber':{'userID':user1.id,'location':'glasgow','service':'Uber','rating':5,'title':'my experience','body':'my experience was great','likes':'5','views':12},
+                        'GlasGo':{'userID':user3.id,'location':'glasgow','service':'GlasGo','rating':1,'title':'my experience','body':'my experience was bad','likes':'2','views':24},
+                        'BlackCabs':{'userID':user1.id,'location':'glasgow','service':'BlackCabs','rating':3,'title':'my experience','body':'my experience was good','likes':'8','views':10}}
+    edinburgh_reviews = {'Uber':{'userID':user2.id,'location':'edinburgh','service':'Uber','rating':5,'title':'my experience','body':'my experience was great','likes':'13','views':40},
+                        'EdinburghCityTaxis':{'userID':user4.id,'location':'glasgow','service':'EdinburghCityTaxis','rating':3,'title':'my experience','body':'my experience was ok','likes':'4','views':11},
+                        'BlackCabs':{'userID':user2.id,'location':'edinburgh','service':'BlackCabs','rating':4,'title':'my experience','body':'my experience was good','likes':'2','views':12}}
+    aberdeen_reviews = {'Uber':{'userID':user4.id,'location':'aberdeen','service':'Uber','rating':5,'title':'my experience','body':'my experience was great','likes':'3','views':'21'}}
 
     glasgow_services = [
         {'name': 'GlasGo',
@@ -59,7 +59,7 @@ def populate():
             serviceID = add_ServicePage(service['name'],service['location'],service['body'],service['logo'])
             for review_key, review_data in service['reviews'].items():
                 user_instance = User.objects.get(id=review_data['userID'])
-                add_Review(serviceID, user_instance, review_data['location'], review_data['service'], review_data['rating'], review_data['title'], review_data['body'])
+                add_Review(serviceID, user_instance, review_data['location'], review_data['service'], review_data['rating'], review_data['title'], review_data['body'], review_data['likes'], review_data['views'])
                           
     # Print out the categories we have added.
     # for s in ServicePage.objects.all():
@@ -71,8 +71,8 @@ def add_ServicePage(name,location,body,logo):
     s.save()
     return s
 
-def add_Review(serviceID, user_instance, location, service, rating, title, body):
-    r = Review.objects.get_or_create(serviceID=serviceID, userID=user_instance, location=location, service=service, rating=rating, title=title, body=body)[0]
+def add_Review(serviceID, user_instance, location, service, rating, title, body,likes,views):
+    r = Review.objects.get_or_create(serviceID=serviceID, userID=user_instance, location=location, service=service, rating=rating, title=title, body=body,likes=likes,views=views)[0]
     r.save()
     return r
 
