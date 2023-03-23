@@ -10,10 +10,39 @@
 {% endblock %}
 
 {% block body_block %}
-    </br>
-    <div class= "jumbotro p-4">
-    <div class= "w3-container" style="border-bottom: 2px solid rgb(0, 0, 0);" > 
+    <div class="container pb-4" style="border-bottom: 2px solid rgb(0, 0, 0);">
+        </br>
+        </br>
         <div class="row">
+<<<<<<< HEAD
+            <div class="col-md-6">
+                        {% if service %}
+                            <h1>{{ service.name }}</h1>
+                            <h2>Reviews</h2>
+                            {% if reviews %}
+                                {% for review in reviews %}
+                                    <div class="card mb-6" style="background-color: rgb(201, 218, 248);">
+                                        <div class="card-body">
+                                            <div class="review-box" id="review-{{ review.id }}">
+                                                <h2><strong>Title:</strong> {{ review.title }}</h2>
+                                                <p><strong>Rating:</strong> {{ review.rating }}</p>
+                                                <p><strong>Body:</strong> {{ review.body }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                                {% else %}
+                                    <strong>No reviews currently in service.</strong>
+                                {% endif %}
+                                {% if user.is_authenticated %}
+                                    <a href="{% url 'ride:add_review' location service.slug %}">Add Review</a> <br />
+                                {% endif %}
+                        {% else %}
+                            The specified service does not exist.
+                        {% endif %}
+            </div>
+        </div>
+=======
         <div class="col">
         {% if service %}
             <h1>{{ service.name }}</h1>
@@ -43,5 +72,6 @@
     </div>
     </div>
     </div>
+>>>>>>> aea158bb455dd5c45c456317dfaa826444b0d412
     </div>
 {% endblock %}

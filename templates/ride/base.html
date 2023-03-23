@@ -129,6 +129,9 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark" href="{% url 'ride:logout' %}?next=/ride/">Logout</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="{% url 'ride:profile' user.username %}?next=/ride/">Logout</a>
+                    </li>
                     {% else %}
                     <li class="nav-item">
                         <a class="nav-link text-dark" href="{% url 'ride:register' %}">Register Here</a>
