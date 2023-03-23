@@ -11,6 +11,7 @@ class ServicePage(models.Model):
 	body = models.CharField(max_length=256)
 	logo = models.ImageField(upload_to='logo_images', blank=True)
 	slug = models.SlugField(unique=True, blank=True)
+	views = models.IntegerField(default=0)
 
 	def save(self, *args, **kwargs):
 		self.slug = slugify(self.name+"_"+self.location)
@@ -33,7 +34,6 @@ class Review(models.Model):
 	title = models.CharField(max_length=128)
 	body = models.CharField(max_length=256)
 
-	views = models.IntegerField(default=0)
 	likes = models.IntegerField(default=0)
 
 	def __str__(self):
