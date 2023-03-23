@@ -55,12 +55,15 @@ def aberdeen(request):
 
 def show_services(request, service_name_slug, location):
 
-    user = request.user
-    user_profile = UserProfile.objects.get(user=user)
-    account_user = user_profile.accountUser
-
     context_dict = {}
-    context_dict['account_user'] = account_user
+    
+    if request.user.is_authenticated:
+        user = request.user
+        user_profile = UserProfile.objects.get(user=user)
+        account_user = user_profile.accountUser
+        context_dict['account_user'] = account_user
+    else:
+        context_dict['account_user'] = None
     
     try:
         service = ServicePage.objects.get(slug=service_name_slug)
@@ -103,38 +106,47 @@ def add_service(request, location):
 
 @login_required
 def add_review(request, service_name_slug, location):
-    try:
-        # serviceName = service_name_slug
-        serviceName = ServicePage.objects.get(slug=service_name_slug)
-        serviceID = ServicePage.objects.get(slug=service_name_slug)
-        userID = User.objects.get(id=request.user.id)
 
-    except ServicePage.DoesNotExist:
-        serviceName = None
+    user = request.user
+    user_profile = UserProfile.objects.get(user=user)
+    account_user = user_profile.accountUser
 
-    if serviceName is None:
-        return redirect('/ride/')
+    if account_user == True:
+        try:
+            # serviceName = service_name_slug
+            serviceName = ServicePage.objects.get(slug=service_name_slug)
+            serviceID = ServicePage.objects.get(slug=service_name_slug)
+            userID = User.objects.get(id=request.user.id)
 
-    form = ReviewForm()
+        except ServicePage.DoesNotExist:
+            serviceName = None
 
-    if request.method == 'POST':
-        form = ReviewForm(request.POST)
+        if serviceName is None:
+            return redirect('/ride/')
 
-        if form.is_valid():
-            if serviceName:
-                review = form.save(commit=False)
-                review.service = serviceName
-                review.userID = userID
-                review.serviceID = serviceID
-                review.views = 0
-                review.save()
+        form = ReviewForm()
 
-                return redirect(reverse('ride:show_services', kwargs={'service_name_slug':service_name_slug, 'location': location}))
+        if request.method == 'POST':
+            form = ReviewForm(request.POST)
+
+            if form.is_valid():
+                if serviceName:
+                    review = form.save(commit=False)
+                    review.service = serviceName
+                    review.userID = userID
+                    review.serviceID = serviceID
+                    review.views = 0
+                    review.save()
+
+                    return redirect(reverse('ride:show_services', kwargs={'service_name_slug':service_name_slug, 'location': location}))
+        else:
+            print(form.errors)
+
+            context_dict = {'form': form, 'service_name_slug': serviceName, 'location': location}
     else:
-        print(form.errors)
-
-        context_dict = {'form': form, 'service_name_slug': serviceName, 'location': location}
-        return render(request, 'ride/add_review.html', context=context_dict)
+        return render(request, 'ride/restricted.html')
+    
+    return render(request, 'ride/add_review.html', context=context_dict)
 
 def register(request):
     registered = False
