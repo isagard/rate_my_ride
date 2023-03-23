@@ -15,6 +15,15 @@
         {% if reviews %}
         <ul>
             {% for review in reviews %}
+                <!-- <li>
+                <a href="{% url 'ride:goto' %}?review_id={{ review.id }}">{{ review.title }}</a>
+                {% if review.views > 1 %}
+                    ({{ review.views }} views)
+                {% elif review.views == 1 %}
+                    ({{ review.views }} view)
+                {% endif %}
+                </li> -->
+                <!-- <li><a href="{{ review.url }}">{{ review.title }}</a></li> -->
                 <li><a href="{{ review.url }}">{{ review.title }}</a></li>
                 <form id="like-review-form" action="{% url 'ride:like_review' review.id %}" method="post">
                     {% csrf_token %}
