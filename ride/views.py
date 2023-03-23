@@ -47,7 +47,7 @@ def aberdeen(request):
 
     city_dict = {}
     city_dict['services'] = service_list
-    city_dict['loaction'] = "aberdeen"
+    city_dict['location'] = "aberdeen"
     
     visitor_cookie_handler(request)
     
@@ -58,11 +58,8 @@ def show_services(request, service_name_slug, location):
 
     try:
         service = ServicePage.objects.get(slug=service_name_slug)
-        try:
-            reviews = Review.objects.get(service)
-            context_dict['reviews'] = reviews
-        except:
-            context_dict['reviews'] = None
+        reviews = Review.objects.filter(service=service)
+        context_dict['reviews'] = reviews
         context_dict['service'] = service
         context_dict['location'] = location
         context_dict['service_name_slug'] = service_name_slug
@@ -70,7 +67,6 @@ def show_services(request, service_name_slug, location):
         context_dict['service'] = None
         context_dict['reviews'] = None
         context_dict['location'] = location
-
     return render(request, 'ride/service.html', context=context_dict)
 
 @login_required
