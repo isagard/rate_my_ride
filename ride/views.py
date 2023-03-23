@@ -1,19 +1,16 @@
-from django.shortcuts import render
-from django.shortcuts import redirect
+from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.http import HttpResponse 
-from ride.forms import ServiceForm
-from ride.forms import ReviewForm
-from ride.forms import UserForm, UserProfileForm
+from django.http import HttpResponse, HttpResponseRedirect 
+from ride.forms import ServiceForm, ReviewForm, UserForm, UserProfileForm
 from ride.models import ServicePage, Review, User, UserProfile
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from datetime import datetime
-# from ride.bing_search import run_query
 from django.views import View
 from django.utils.decorators import method_decorator
 from django.contrib.auth.models import User
-from ride.models import UserProfile
+from django.contrib import messages
+
 
 def home(request):
 
@@ -221,85 +218,57 @@ def visitor_cookie_handler(request):
         request.session['last_visit'] = last_visit_cookie
     request.session['visits'] = visits
 
-# def search(request):
-#     result_list = []
+def profile(request, username):
+    selected_user = User.objects.get(username=username)
+    user_profile = UserProfile.objects.get(user=selected_user)
+
+    if request.user == selected_user:
+        if request.method == 'POST':
+            form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
+
+            if form.is_valid():
+                form.save(commit=True)
+
+                messages.success(request, 'Profile updated successfully')
+
+                return HttpResponseRedirect(request.path_info)
+        else:
+            form = UserProfileForm(instance=user_profile)
+    else:
+        form = None
+
+    context = {
+        'selected_user': selected_user,
+        'user_profile': user_profile,
+        'form': form,
+    }
+
+    return render(request, 'ride/profile.html', context)
+
+# def profile(request, username):
+#     selected_user = User.objects.get(username=username)
+#     user_profile = UserProfile.objects.get(user=selected_user)
 
 #     if request.method == 'POST':
-#         query = request.POST['query'].strip()
-
-#     if query:
-    # Run our Bing function to get the results list
-    #     result_list = run_query(query)
-
-    # return render(request, 'ride/search.html', {'result_list': result_list})
-
-# @login_required
-# def register_profile(request):
-#     form = UserProfileForm()
-#     if request.method == 'POST':
-#         form = UserProfileForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             user_profile = form.save(commit=False)
-#             user_profile.user = request.user
-#             user_profile.save()
-#             return redirect(reverse('ride:index'))
+#         user_form = UserForm(request.POST, instance=selected_user)
+#         profile_form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
+        
+#         if user_form.is_valid() and profile_form.is_valid():
+#             user_form.save()
+#             profile_form.save()
+            
+#             messages.success(request, 'Profile updated successfully')
+#             return redirect('profile', username=selected_user.username)
 #     else:
-#         print(form.errors)
-#         context_dict = {'form': form, 'errors': form.errors}
-#     return render(request, 'ride/profile_registration.html', context_dict)
+#         user_form = UserForm(instance=selected_user)
+#         profile_form = UserProfileForm(instance=user_profile)
 
-# def goto_url(request):
-#     if request.method == 'GET':
-#         review_id = request.GET.get('review_id')
-#         try:
-#             selected_review = Review.objects.get(id=review_id)
-#         except Review.DoesNotExist:
-#             return redirect(reverse('ride:home'))
-#         selected_review.views = selected_review.views + 1
-#         selected_review.save()
-#         return redirect(selected_review.url)
-    
-#     return redirect(reverse('ride:home'))
+#     context = {
+#         'selected_user': selected_user,
+#         'user_profile': user_profile,
+#         'user_form': user_form,
+#         'profile_form': profile_form,
+#     }
 
-# class ProfileView(View):
-#     def get_user_details(self, username):
-#         try:
-#             user = User.objects.get(username=username)
-#         except User.DoesNotExist:
-#             return None
-#         user_profile = UserProfile.objects.get_or_create(user=user)[0]
-#         form = UserProfileForm({'website': user_profile.website,
-#         'picture': user_profile.picture})
-#         return (user, user_profile, form)
-    
-#     @method_decorator(login_required)
-#     def get(self, request, username):
-#         try:
-#             (user, user_profile, form) = self.get_user_details(username)
-#         except TypeError:
-#             return redirect(reverse('ride:home'))
-#         context_dict = {'user_profile': user_profile,
-#             'selected_user': user,
-#             'form': form}
-#         return render(request, 'ride/profile.html', context_dict)
-#     @method_decorator(login_required)
-#     def post(self, request, username):
-#         try:
-#             (user, user_profile, form) = self.get_user_details(username)
-#         except TypeError:
-#             return redirect(reverse('ride:home'))
-#         form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
-#         if form.is_valid():
-#             form.save(commit=True)
-#             return redirect('ride:profile', user.username)
-#         else:
-#             print(form.errors)
+#     return render(request, 'ride/profile.html', context)
 
-#         context_dict = {'user_profile': user_profile, 'selected_user': user,'form': form}
-#         return render(request, 'ride/profile.html', context_dict)
-
-# class ListProfilesView(View):
-#     @method_decorator(login_required)
-#     def get(self, request):
-#         profiles = UserProfile.objects.all()
-#         return render(request,'ride/list_profiles.html',{'userprofile_list': profiles})
