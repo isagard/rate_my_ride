@@ -24,10 +24,8 @@ def glasgow(request):
     service_list = ServicePage.objects.filter(location='Glasgow').order_by('name')
 
     city_dict = {}
-    city_dict['boldmessage'] = 'This is the Glasgow page'
     city_dict['services'] = service_list
     city_dict['location'] = 'glasgow'
-    city_dict['visits'] = request.session['visits']
     
     visitor_cookie_handler(request)
 
@@ -37,10 +35,8 @@ def edinburgh(request):
     service_list = ServicePage.objects.filter(location='Edinburgh').order_by('name')
 
     city_dict = {}
-    city_dict['boldmessage'] = 'This is the Edinburgh page'
     city_dict['services'] = service_list
     city_dict['location'] = 'edinburgh'
-    city_dict['visits'] = request.session['visits']
     
     visitor_cookie_handler(request)
     
@@ -50,10 +46,8 @@ def aberdeen(request):
     service_list = ServicePage.objects.filter(location='Aberdeen').order_by('name')
 
     city_dict = {}
-    city_dict['boldmessage'] = 'This is the Aberdeen page'
     city_dict['services'] = service_list
-    city_dict['location'] = 'aberdeen'
-    city_dict['visits'] = request.session['visits']
+    city_dict['loaction'] = "aberdeen"
     
     visitor_cookie_handler(request)
     
@@ -64,8 +58,11 @@ def show_services(request, service_name_slug, location):
 
     try:
         service = ServicePage.objects.get(slug=service_name_slug)
-        reviews = Review.objects.filter(service=service).order_by(-views)
-        context_dict['reviews'] = reviews
+        try:
+            reviews = Review.objects.get(service)
+            context_dict['reviews'] = reviews
+        except:
+            context_dict['reviews'] = None
         context_dict['service'] = service
         context_dict['location'] = location
         context_dict['service_name_slug'] = service_name_slug
