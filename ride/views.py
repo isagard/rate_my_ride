@@ -9,6 +9,11 @@ from ride.models import ServicePage, Review, User, UserProfile
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from datetime import datetime
+# from ride.bing_search import run_query
+from django.views import View
+from django.utils.decorators import method_decorator
+from django.contrib.auth.models import User
+from ride.models import UserProfile
 
 def home(request):
 
@@ -56,7 +61,7 @@ def show_services(request, service_name_slug, location):
 
     try:
         service = ServicePage.objects.get(slug=service_name_slug)
-        reviews = Review.objects.filter(service=service)
+        reviews = Review.objects.filter(service=service).order_by(-views)
         context_dict['reviews'] = reviews
         context_dict['service'] = service
         context_dict['location'] = location
@@ -192,3 +197,86 @@ def visitor_cookie_handler(request):
     else:
         request.session['last_visit'] = last_visit_cookie
     request.session['visits'] = visits
+
+# def search(request):
+#     result_list = []
+
+#     if request.method == 'POST':
+#         query = request.POST['query'].strip()
+
+#     if query:
+    # Run our Bing function to get the results list
+    #     result_list = run_query(query)
+
+    # return render(request, 'ride/search.html', {'result_list': result_list})
+
+@login_required
+def register_profile(request):
+    form = UserProfileForm()
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES)
+    if form.is_valid():
+        user_profile = form.save(commit=False)
+        user_profile.user = request.user
+        user_profile.save()
+        return redirect(reverse('ride:index'))
+    else:
+        print(form.errors)
+        context_dict = {'form': form}
+    return render(request, 'ride/profile_registration.html', context_dict)
+
+def goto_url(request):
+    if request.method == 'GET':
+        review_id = request.GET.get('review_id')
+        try:
+            selected_review = Review.objects.get(id=review_id)
+        except Review.DoesNotExist:
+            return redirect(reverse('ride:home'))
+        selected_review.views = selected_review.views + 1
+        selected_review.save()
+        return redirect(selected_review.url)
+    
+    return redirect(reverse('ride:home'))
+
+class ProfileView(View):
+    def get_user_details(self, username):
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            return None
+        user_profile = UserProfile.objects.get_or_create(user=user)[0]
+        form = UserProfileForm({'website': user_profile.website,
+        'picture': user_profile.picture})
+        return (user, user_profile, form)
+    
+    @method_decorator(login_required)
+    def get(self, request, username):
+        try:
+            (user, user_profile, form) = self.get_user_details(username)
+        except TypeError:
+            return redirect(reverse('ride:home'))
+        context_dict = {'user_profile': user_profile,
+            'selected_user': user,
+            'form': form}
+        return render(request, 'ride/profile.html', context_dict)
+    @method_decorator(login_required)
+    def post(self, request, username):
+        try:
+            (user, user_profile, form) = self.get_user_details(username)
+        except TypeError:
+            return redirect(reverse('ride:home'))
+        form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
+        if form.is_valid():
+            form.save(commit=True)
+            return redirect('ride:profile', user.username)
+        else:
+            print(form.errors)
+
+        context_dict = {'user_profile': user_profile, 'selected_user': user,'form': form}
+        return render(request, 'ride/profile.html', context_dict)
+
+class ListProfilesView(View):
+    @method_decorator(login_required)
+    def get(self, request):
+        profiles = UserProfile.objects.all()
+        return render(request,'ride/list_profiles.html',{'userprofile_list': profiles})
