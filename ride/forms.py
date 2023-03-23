@@ -41,6 +41,8 @@ class UserForm(forms.ModelForm):
         fields = ('username', 'email', 'password',)
 
 class UserProfileForm(forms.ModelForm):
+    picture = forms.ImageField(label='Upload your Profile Picture')
+    accountUser = forms.BooleanField(label='Please tick for a user account, leave blank for a service account')
     class Meta:
         model = UserProfile
         fields = ('accountUser', 'picture',)
