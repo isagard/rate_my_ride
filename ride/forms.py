@@ -12,8 +12,6 @@ class ReviewForm(forms.ModelForm):
     location = forms.CharField(max_length=32, help_text="Please enter the city you took the taxi from for your review.")
     body = forms.CharField(max_length=256, help_text="Please talk about your experience.")
     service = forms.CharField(max_length=32, help_text="Please enter the name of the taxi service for your review.")
-    views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
-    likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
     slug = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     # An inline class to provide additional information on the form.

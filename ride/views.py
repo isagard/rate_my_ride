@@ -125,13 +125,6 @@ def add_review(request, service_name_slug, location):
         context_dict = {'form': form, 'service_name_slug': serviceName, 'location': location}
         return render(request, 'ride/add_review.html', context=context_dict)
 
-@login_required
-def like_review(request, review_id):
-    review = Review.objects.get(id=review_id)
-    review.likes += 1
-    review.save()
-    return redirect(reverse('ride:show_services', kwargs={'service_name_slug': review.service.slug, 'location': review.service.location}))
-
 def register(request):
     registered = False
     if request.method == 'POST':
