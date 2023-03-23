@@ -35,8 +35,8 @@ urlpatterns = [
     path('ride/', include('ride.urls')),
     # The above maps any URLs starting with rate_my_ride/ to be handled by ride.
     path('admin/', admin.site.urls),
-    # path('accounts/login/', views.user_login, name='login'),
-    path('accounts/register/', MyRegistrationView.as_view(), name='registration_register'),
-    path('accounts/', include('registration.backends.simple.urls')),
+    path('accounts/login/', views.user_login, name='login'),
+    # path('accounts/register/', MyRegistrationView.as_view(), name='registration_register'),
+    # path('accounts/', include('registration.backends.simple.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 

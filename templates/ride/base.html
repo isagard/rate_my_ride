@@ -121,8 +121,6 @@
     
             <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
                 <ul class="navbar-nav p-4">
-                    <li class="nav-item"><a class="nav-link" href="{% url 'ride:profile' user.username %}">Profile</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'ride:list_profiles' %}">List Profiles</a></li>
                     {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link text-dark" href="{% url 'ride:logout' %}?next=/ride/">Logout</a>
@@ -179,5 +177,7 @@
     </script>
     <script src="https://getbootstrap.com/docs/4.2/examples/dashboard/dashboard.js">
     </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    crossorigin="anonymous"></script>
     </body>
 </html>
