@@ -22,7 +22,7 @@ def glasgow(request):
 
     city_dict = {}
     city_dict['services'] = service_list
-    city_dict['location'] = 'glasgow'
+    city_dict['location'] = 'Glasgow'
     
     visitor_cookie_handler(request)
 
@@ -33,7 +33,7 @@ def edinburgh(request):
 
     city_dict = {}
     city_dict['services'] = service_list
-    city_dict['location'] = 'edinburgh'
+    city_dict['location'] = 'Edinburgh'
     
     visitor_cookie_handler(request)
     
@@ -44,7 +44,7 @@ def aberdeen(request):
 
     city_dict = {}
     city_dict['services'] = service_list
-    city_dict['location'] = "aberdeen"
+    city_dict['location'] = "Aberdeen"
     
     visitor_cookie_handler(request)
     
@@ -64,7 +64,7 @@ def show_services(request, service_name_slug, location):
     
     try:
         service = ServicePage.objects.get(slug=service_name_slug)
-        reviews = Review.objects.filter(service=service)
+        reviews = Review.objects.filter(service=service,location=location)
         context_dict['reviews'] = reviews
         context_dict['service'] = service
         context_dict['location'] = location
