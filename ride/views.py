@@ -209,6 +209,31 @@ def visitor_cookie_handler(request):
         request.session['last_visit'] = last_visit_cookie
     request.session['visits'] = visits
 
+
+def profile(request, username):
+    selected_user = User.objects.get(username=username)
+    user_profile = UserProfile.objects.get(user=selected_user)
+
+    if request.user == selected_user:
+        if request.method == 'POST':
+            form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
+
+            if form.is_valid():
+                form.save(commit=True)
+                return HttpResponseRedirect(request.path_info)
+        else:
+            form = UserProfileForm(instance=user_profile)
+    else:
+        form = None
+
+    context = {
+        'selected_user': selected_user,
+        'user_profile': user_profile,
+        'form': form,
+    }
+
+    return render(request, 'ride/profile.html', context)
+
 # def search(request):
 #     result_list = []
 
