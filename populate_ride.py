@@ -18,13 +18,13 @@ def populate():
     user3 = User.objects.create_user(username='user003', email='user003@example.com', password='password')
     user4 = User.objects.create_user(username='user004', email='user004@example.com', password='password')
 
-    glasgow_reviews = {'Uber':{'userID':user1.id,'location':'glasgow','service':'Uber','rating':5,'title':'my experience','body':'my experience was great','likes':'5','views':12},
-                        'GlasGo':{'userID':user3.id,'location':'glasgow','service':'GlasGo','rating':1,'title':'my experience','body':'my experience was bad','likes':'2','views':24},
-                        'BlackCabs':{'userID':user1.id,'location':'glasgow','service':'BlackCabs','rating':3,'title':'my experience','body':'my experience was good','likes':'8','views':10}}
-    edinburgh_reviews = {'Uber':{'userID':user2.id,'location':'edinburgh','service':'Uber','rating':5,'title':'my experience','body':'my experience was great','likes':'13','views':40},
-                        'EdinburghCityTaxis':{'userID':user4.id,'location':'glasgow','service':'EdinburghCityTaxis','rating':3,'title':'my experience','body':'my experience was ok','likes':'4','views':11},
-                        'BlackCabs':{'userID':user2.id,'location':'edinburgh','service':'BlackCabs','rating':4,'title':'my experience','body':'my experience was good','likes':'2','views':12}}
-    aberdeen_reviews = {'Uber':{'userID':user4.id,'location':'aberdeen','service':'Uber','rating':5,'title':'my experience','body':'my experience was great','likes':'3','views':'21'}}
+    glasgow_reviews = {'Uber':{'userID':user1.id,'location':'glasgow','service':'Uber','rating':5,'title':'my experience','body':'my experience was great','likes':5,'views':12},
+                        'GlasGo':{'userID':user3.id,'location':'glasgow','service':'GlasGo','rating':1,'title':'my experience','body':'my experience was bad','likes':2,'views':24},
+                        'BlackCabs':{'userID':user1.id,'location':'glasgow','service':'BlackCabs','rating':3,'title':'my experience','body':'my experience was good','likes':8,'views':10}}
+    edinburgh_reviews = {'Uber':{'userID':user2.id,'location':'edinburgh','service':'Uber','rating':5,'title':'my experience','body':'my experience was great','likes':13,'views':40},
+                        'EdinburghCityTaxis':{'userID':user4.id,'location':'glasgow','service':'EdinburghCityTaxis','rating':3,'title':'my experience','body':'my experience was ok','likes':4,'views':11},
+                        'BlackCabs':{'userID':user2.id,'location':'edinburgh','service':'BlackCabs','rating':4,'title':'my experience','body':'my experience was good','likes':2,'views':12}}
+    aberdeen_reviews = {'Uber':{'userID':user4.id,'location':'aberdeen','service':'Uber','rating':5,'title':'my experience','body':'my experience was great','likes':3,'views':21}}
 
     glasgow_services = [
         {'name': 'GlasGo',
