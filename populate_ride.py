@@ -81,5 +81,6 @@ def add_Review(serviceID, user_instance, location, service, rating, title, body,
 if __name__=='__main__':
     print('Starting Ride population script...') 
     populate()
+    print('Population Script Complete')
 
 
