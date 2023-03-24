@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect 
 from ride.forms import ServiceForm, ReviewForm, UserForm, UserProfileForm
@@ -10,6 +10,8 @@ from django.views import View
 from django.utils.decorators import method_decorator
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.views.decorators.http import require_GET
+
 
 
 def home(request):
@@ -245,30 +247,19 @@ def profile(request, username):
 
     return render(request, 'ride/profile.html', context)
 
-# def profile(request, username):
-#     selected_user = User.objects.get(username=username)
-#     user_profile = UserProfile.objects.get(user=selected_user)
+@login_required
+@require_GET
+def like_review(request):
+    review_id = request.GET.get('review_id')
+    if not review_id:
+        return HttpResponse(status=400)
+    
+    try:
+        review = get_object_or_404(Review, id=int(review_id))
+    except ValueError:
+        return HttpResponse(status=400)
 
-#     if request.method == 'POST':
-#         user_form = UserForm(request.POST, instance=selected_user)
-#         profile_form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
-        
-#         if user_form.is_valid() and profile_form.is_valid():
-#             user_form.save()
-#             profile_form.save()
-            
-#             messages.success(request, 'Profile updated successfully')
-#             return redirect('profile', username=selected_user.username)
-#     else:
-#         user_form = UserForm(instance=selected_user)
-#         profile_form = UserProfileForm(instance=user_profile)
-
-#     context = {
-#         'selected_user': selected_user,
-#         'user_profile': user_profile,
-#         'user_form': user_form,
-#         'profile_form': profile_form,
-#     }
-
-#     return render(request, 'ride/profile.html', context)
-
+    review.likes += 1
+    review.save()
+    return HttpResponse(review.likes)
+    

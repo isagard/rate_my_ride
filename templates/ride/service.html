@@ -17,15 +17,25 @@
             <div class="col-md-6">
                         {% if service %}
                             <h1>{{ service.name }}</h1>
+                            <p><a href="javascript:history.back()">Back to {{location}} page</a></p>
                             <h2>Reviews</h2>
                             {% if reviews %}
                                 {% for review in reviews %}
                                     <div class="card mb-6" style="background-color: rgb(201, 218, 248);">
                                         <div class="card-body">
                                             <div class="review-box" id="review-{{ review.id }}">
-                                                <h2><strong>{{ review.title }}</strong></h2>
+                                                <h2><strong>{{ review.title }}</strong></h2>   
                                                 <p><strong>Rating:</strong> {{ review.rating }}</p>
                                                 <p>{{ review.body }}</p>
+                                                <div>
+                                                    <strong id="like_count">{{ review.likes }}</strong> likes
+                                                    {% if user.is_authenticated %}
+                                                        <button id="like_btn" data-reviewid="{{ review.id }}" class="btn btn-primary btn-sm" type="button">
+                                                        <span data-feather="thumbs-up"></span>
+                                                        Like Review
+                                                        </button>
+                                                    {% endif %}
+                                                </div> 
                                             </div>
                                         </div>
                                     </div>
