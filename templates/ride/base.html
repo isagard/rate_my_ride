@@ -9,8 +9,7 @@
         content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <link rel="icon" href="{% static 'images/taxi.png' %}">
-    <script src="{% static "ride/stylesheet.css" %}"></script>
-    <link rel="stylesheet" href="static/ride/stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'ride/stylesheet.css' %}">
     <title>
         Rate My Ride - {% block title_block %}Home{% endblock %}
     </title>
@@ -20,97 +19,6 @@
     <!-- Custom styles for this template -->
     <link href="https://getbootstrap.com/docs/4.2/examples/dashboard/dashboard.css"
         rel="stylesheet">
-    <style>
-        h1 {
-            font-size: 30pt;
-            font-style:normal;
-            text-align:left;
-            color:black;
-            font-family: 'Arial', 'Helvetica', sans-serif;
-        }
-
-        .middle {
-            text-align: center;
-        }
-
-        body {
-            /* fallback for old browsers */
-            background: #a4c2f4;
-
-            /* Chrome 10-25, Safari 5.1-6 */
-            background: -webkit-linear-gradient(to right, rgb(164, 194, 244), rgb(164, 194, 244));
-
-            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-            background: linear-gradient(to right, rgb(164, 194, 244), rgb(164, 194, 244));
-        } 
-
-        .right{
-            float:right;
-            padding: 15PX;
-            height: fit-content;
-        }
-        .footerdiv{
-            display: inline;
-            height: fit-content;
-        }
-        .left{
-            padding: 15px;
-            float: left;
-            height: fit-content;
-        }
-        footer{
-            height:41px;
-        }
-
-        .sample-list {
-            list-style-type: none;
-            background-color: #333333;
-            color: #FFFFFF;
-            padding: 10px;
-
-        }
-
-        a {
-            color:black;
-            text-decoration: none;
-        }
-
-        a:hover {
-            color: blue;
-            text-decoration: underline;
-        }
-
-        .gradient-custom {
-            /* fallback for old browsers */
-            background: 207, 226, 243;
-
-            /* Chrome 10-25, Safari 5.1-6 */
-            background: -webkit-linear-gradient(to right, rgb(207, 226, 243), rgb(207, 226, 243));
-
-            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-            background: linear-gradient(to right, rgb(207, 226, 243), rgb(207, 226, 243));
-        }
-
-        .cardcolour {
-            background: rgb(74, 134, 232);
-        }
-    
-        li {
-            color:#333333; 
-        }
-
-        .jumbotron {
-            background-color: rgb(201, 218, 248);
-        }
-
-        .nav_title {
-            height :max-content;
-            background-color: transparent;
-            font-size: xx-large;
-            color: #333333;
-        }
-
-    </style>
 </head>
 <body>
     <!-- Header nav bar -->
@@ -128,27 +36,19 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
                 <ul class="navbar-nav p-4 ">
                     {% if user.is_authenticated %}
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdownMenuLink"
-                            role="button" data-toggle="dropdown" aria-expanded="false">
-                            <img src="{{ user_profile.picture.url }}" class="rounded-circle" height="50" alt="" loading="lazy" />
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <li class="dropdown-item">
-                                    <a class="nav-link text-dark" href="{% url 'ride:profile' user.username %}">My Account</a>
-                                </li>
-                                <li class="dropdown-item">
-                                    <a class="nav-link text-dark" href="{% url 'ride:logout' %}?next=/ride/">Logout</a>
-                                </li>
-                            </ul>
-                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="{% url 'ride:profile' user.username %}">My Account</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="{% url 'ride:logout' %}?next=/ride/">Logout</a>
+                    </li>
                     {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" href="{% url 'ride:register' %}">Register Here</a>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link text-dark" href="{% url 'ride:login' %}">Login</a>
-                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="{% url 'ride:register' %}">Register Here</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link text-dark" href="{% url 'ride:login' %}">Login</a>
+                    </li>
                     {% endif %}
                 </ul>
             </div>
@@ -202,8 +102,8 @@
     </script>
     <script src="https://getbootstrap.com/docs/4.2/examples/dashboard/dashboard.js">
     </script>
-    <script src="{% static "js/jquery-3.3.1.min.js" %}" crossorigin="anonymous"></script>
-    <script src="{% static "js/ride-ajax.js" %}" crossorigin="anonymous"></script>
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}" crossorigin="anonymous"></script>
+    <script src="{% static 'js/ride-ajax.js' %}" crossorigin="anonymous"></script>
 
     </body>
 </html>
