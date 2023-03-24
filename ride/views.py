@@ -27,6 +27,7 @@ def glasgow(request):
     city_dict['location'] = 'Glasgow'
 
     city_dict['viewed_services'] = ServicePage.objects.filter(location='Glasgow').order_by('-views')[:5]
+    city_dict['reviews'] = Review.objects.filter(location='Glasgow').order_by('-likes')[:5]
     
     visitor_cookie_handler(request)
 
@@ -40,6 +41,7 @@ def edinburgh(request):
     city_dict['location'] = 'Edinburgh'
 
     city_dict['viewed_services'] = ServicePage.objects.filter(location='Edinburgh').order_by('-views')[:5]
+    city_dict['reviews'] = Review.objects.filter(location='Edinburgh').order_by('-likes')[:5]
     
     visitor_cookie_handler(request)
     
@@ -53,6 +55,7 @@ def aberdeen(request):
     city_dict['location'] = "Aberdeen"
 
     city_dict['viewed_services'] = ServicePage.objects.filter(location='Aberdeen').order_by('-views')[:5]
+    city_dict['reviews'] = Review.objects.filter(location='Aberdeen').order_by('-likes')[:5]
     
     visitor_cookie_handler(request)
     
