@@ -61,7 +61,7 @@ def populate():
         {'name':'Uber',
          'location':'Aberdeen','body':"Get a ride in minutes. Or become a driver and earn money on your schedule. Uber is finding you better ways to move, work, and succeed in the UK.",'logo':'/static/images/uber.jpeg','reviews': {'Uber': aberdeen_reviews['Uber']},'views':11},
          {'name':'Aberdeen Taxis',
-         'location':'Aberdeen','body':"Welcome to Aberdeen Taxis, your specialist taxi company covering the whole of Aberdeen and the local area. Taxi bookings can be made fast, easily and securely online using this website or by using the phone number at the top of the page.",'logo':'/static/images/aberdeenTaxis.jpeg','reviews': {'Aberdeen Taxis': aberdeen_reviews['Aberdeen Taxis']},'views':11}]
+         'location':'Aberdeen','body':"Welcome to Aberdeen Taxis, your specialist taxi company covering the whole of Aberdeen and the local area. Taxi bookings can be made fast, easily and securely online using this website or by using the phone number at the top of the page.",'logo':'null','reviews': {'Aberdeen Taxis': aberdeen_reviews['Aberdeen Taxis']},'views':11}]
 
     locations = [glasgow_services,edinburgh_services,aberdeen_services]
 

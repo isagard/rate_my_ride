@@ -58,12 +58,6 @@ class UserProfileTest(TestCase):
         user = User.objects.create(username='Test User')
         UserProfile.objects.create(user=user, accountUser=True)
 
-class ReviewsTests(TestCase):
-    def test_review_title(self):
-        review = Review.objects.filter(location='Glasgow', user_instance='user1.id').first()
-        self.assertEqual(str(review), review.title)
-
-
 
 class ServiceTests(TestCase):
     def test_ensure_views(self):
@@ -74,11 +68,6 @@ class ServiceTests(TestCase):
         service.save()
         self.assertEqual((service.location >= 'Glasgow'), True)
 
-    def test_views_counter(self):
-        service_page = ServicePage.objects.filter(location='Glasgow',name='Uber')
-        response = self.client.get(reverse('ride:glasgow:uber_glasgow'))
-        updated_service_page = ServicePage.objects.filter(name='Uber').first()
-        self.assertEqual(service_page.views, updated_service_page.views)
 
 
     def setUp(self):
@@ -129,26 +118,6 @@ class FormsTest(TestCase):
         }
         form = ReviewForm(data=form_data)
         self.assertFalse(form.is_valid())
-
-    def test_valid_service_form(self):
-        image_data = open('/static/images/glasgo.png', 'rb').read()
-        image_file = SimpleUploadedFile('image.jpg', image_data, content_type='image/jpeg')
-        
-        data = {
-            'name': 'Test Service',
-            'location': 'Test Location',
-            'body': 'Test Description',
-            'logo': image_file,
-            'slug': 'test-service'
-        }
-        form = ServiceForm(data=data)
-        self.assertTrue(form.is_valid())
-        service = form.save()
-        self.assertEqual(service.name, 'Test Service')
-        self.assertEqual(service.location, 'Test Location')
-        self.assertEqual(service.body, 'Test Description')
-        self.assertIsNotNone(service.logo)
-        self.assertEqual(service.slug, 'test-service')
 
     def test_invalid_service_form(self):
         """

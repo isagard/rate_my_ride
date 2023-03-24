@@ -18,6 +18,7 @@
         <div class="row">
             <div class="col-md-6">
                         {% if service %}
+                            
                             <h1>{{ service.name }}</h1>
                             <div>{{service.body}}</div>
                             <br>
@@ -54,6 +55,9 @@
                         {% else %}
                             The specified service does not exist.
                         {% endif %}
+            </div>
+            <div class="col-md-6">
+                <img src="{{service.logo}}" alt="{{service.name}} logo" width="100%" style="max-width: 150px;">
             </div>
         </div>
     </div>

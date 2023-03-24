@@ -7,9 +7,9 @@ app_name = 'ride'
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('glasgow/', views.glasgow, name='glasgow'),
-    path('edinburgh/', views.edinburgh, name='edinburgh'),
-    path('aberdeen/', views.aberdeen, name='aberdeen'),
+    path('Glasgow/', views.glasgow, name='glasgow'),
+    path('Edinburgh/', views.edinburgh, name='edinburgh'),
+    path('Aberdeen/', views.aberdeen, name='aberdeen'),
     path('profile/<str:username>/', views.profile, name='profile'),
     path('<str:location>/add_service/', views.add_service, name='add_service'),
     path('<str:location>/<slug:service_name_slug>/', views.show_services, name='show_services'),
