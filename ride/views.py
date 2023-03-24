@@ -77,10 +77,9 @@ def show_services(request, service_name_slug, location):
         context_dict['service'] = service
         context_dict['location'] = location
         context_dict['service_name_slug'] = service_name_slug
-        print(service.views)
         service.views += 1
         service.save()
-        print(service.views)
+        
     except ServicePage.DoesNotExist:
         context_dict['service'] = None
         context_dict['reviews'] = None
