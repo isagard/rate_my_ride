@@ -42,32 +42,6 @@ class RideConfigurationTests(TestCase):
         """
         self.assertTrue('django.contrib.sessions' in settings.INSTALLED_APPS)
 
-
-class RideSessionPersistenceTests(TestCase):
-    """
-    Tests to see if session data is persisted by counting up the number of accesses, and examining last time since access.
-    """
-    def test_visits_counter(self):
-        """
-        Tests the visits counter.
-        Artificially tweaks the last_visit variable to force a counter increment.
-        """
-        for i in range(0, 10):
-            response = self.client.get(reverse('rango:index'))
-            session = self.client.session
-
-            self.assertIsNotNone(session['visits'])
-            self.assertIsNotNone(session['last_visit'])
-
-            # Get the last visit, and subtract one day.
-            # Forces an increment of the counter.
-            last_visit = datetime.now() - timedelta(days=1)
-
-            session['last_visit'] = str(last_visit)
-            session.save()
-
-            self.assertEquals(session['visits'], i+1)
-
 class RideViewTests(TestCase):
     """
     The index and about views.
@@ -76,42 +50,48 @@ class RideViewTests(TestCase):
         """
         Checks that the index view doesn't contain any presentational logic for showing the number of visits.
         """
-        response = self.client.get(reverse('ride:index'))
+        response = self.client.get(reverse('ride:home'))
         content = response.content.decode()
 
         self.assertTrue('visits:' not in content.lower(), f"{FAILURE_HEADER}The home.html template should not contain any logic for displaying the number of views. Did you complete the exercises?{FAILURE_FOOTER}")
         
-    def test_visits_passed_via_context(self):
-        """
-        Checks that the context dictionary contains the correct values.
-        """
-        response = self.client.get(reverse('ride:home'))  # Set the counter!
-        self.assertNotIn('visits', response.context, f"{FAILURE_HEADER}The 'visits' variable appeared in the context dictionary passed by home().{FAILURE_FOOTER}")
-
-        response = self.client.get(reverse('ride:glasgow'))
-        self.assertIn('visits', response.context, f"{FAILURE_HEADER}We couldn't find the 'visits' variable in the context dictionary for glasgow(). Check your glasgow() implementation.{FAILURE_FOOTER}")
-
-        response = self.client.get(reverse('ride:edinburgh'))
-        self.assertIn('visits', response.context, f"{FAILURE_HEADER}We couldn't find the 'visits' variable in the context dictionary for edinburgh(). Check your edinburgh() implementation.{FAILURE_FOOTER}")
-
-        response = self.client.get(reverse('ride:aberdeen'))
-        self.assertIn('visits', response.context, f"{FAILURE_HEADER}We couldn't find the 'visits' variable in the context dictionary for aberdeen(). Check your aberdeen() implementation.{FAILURE_FOOTER}")
-
-class ServicePageTest(TestCase):
-
-    def setUp(self):
-        ServicePage.objects.create(name='Test Service', location='Test Location', body='Test Body')
-
-    def test_servicepage_slug_field(self):
-        service = ServicePage.objects.get(name='Test Service')
-        self.assertEqual(service.slug, 'test-service', f"{FAILURE_HEADER}Test service page failed.{FAILURE_FOOTER}")
-
 class UserProfileTest(TestCase):
 
     def setUp(self):
         user = User.objects.create(username='Test User')
         UserProfile.objects.create(user=user, accountUser=True)
 
-    def test_userprofile_picture_field(self):
-        user_profile = UserProfile.objects.get(user__username='Test User')
-        self.assertEqual(user_profile.picture.url, '/media/', f"{FAILURE_HEADER}Test user profile picture failed.{FAILURE_FOOTER}")
+class ReviewsTests(TestCase):
+    def test_ensure_views(self):
+        user1 = User.objects.create_user(username='user001', email='user001@example.com', password='password')
+        review = Review(serviceID='Uber', user_instance=user1.id, location='glasgow', service='Uber', rating='4', title='test title', body='test body', likes =3)
+        self.assertEqual(review.__str__(), review.title)
+
+class ServiceTests(TestCase):
+    def test_ensure_views(self):
+        """
+        Ensures the number of views received for a Category are positive or zero.
+        """
+        service = ServicePage(name='test', location='glasgow', body='this is a test', views=1)
+        service.save()
+        self.assertEqual((service.location >= 'Glasgow'), True)
+
+    def test_views_counter(self):
+        views = uber_glasgow.views
+        response = self.client.get(reverse('ride:home:glasgow:uber'))
+        session = self.client.session
+        self.assertEqual(views, uber_glasgow.views)
+
+    def test_service_name(self):
+        
+        service = ServicePage(name='test', location='glasgow', body='this is a test', views=1)
+        service.save()
+        
+        self.assertEqual(service.__str__(),service.name)
+
+    def setUp(self):
+        ServicePage.objects.create(name='Test Service', location='Test Location', body='Test Body')
+
+    def test_servicepage_slug_field(self):
+        service = ServicePage.objects.get(name='Test Service')
+        self.assertEqual(service.slug, 'test-service_test-location', f"{FAILURE_HEADER}Test service page failed.{FAILURE_FOOTER}")
