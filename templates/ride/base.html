@@ -128,11 +128,19 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
                 <ul class="navbar-nav p-4 ">
                     {% if user.is_authenticated %}
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" href="{% url 'ride:profile' user.username %}">My Account</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" href="{% url 'ride:logout' %}?next=/ride/">Logout</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdownMenuLink"
+                            role="button" data-toggle="dropdown" aria-expanded="false">
+                            <img src="{{ user_profile.picture.url }}" class="rounded-circle" height="50" alt="" loading="lazy" />
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li class="dropdown-item">
+                                    <a class="nav-link text-dark" href="{% url 'ride:profile' user.username %}">My Account</a>
+                                </li>
+                                <li class="dropdown-item">
+                                    <a class="nav-link text-dark" href="{% url 'ride:logout' %}?next=/ride/">Logout</a>
+                                </li>
+                            </ul>
                         </li>
                     {% else %}
                         <li class="nav-item">
@@ -149,6 +157,8 @@
     
     <!-- Sidebar -->
     <nav class="col-md-2 d-none d-md-block sidebar">
+    </br>
+    </br>
         <div class="sidebar-sticky" style="background-color: rgb(201, 218, 248);">
             <ul class="navbar-nav mr-auto p-4">
                 <li class="nav-item">
