@@ -44,13 +44,9 @@ class RideConfigurationTests(TestCase):
         self.assertTrue('django.contrib.sessions' in settings.INSTALLED_APPS)
 
 class RideViewTests(TestCase):
-    """
-    The index and about views.
-    """
+
     def test_home_view(self):
-        """
-        Checks that the index view doesn't contain any presentational logic for showing the number of visits.
-        """
+        
         response = self.client.get(reverse('ride:home'))
         content = response.content.decode()
 
@@ -64,8 +60,10 @@ class UserProfileTest(TestCase):
 
 class ReviewsTests(TestCase):
     def test_review_title(self):
-        review = Review.objects.filter(location='Glasgow', user_instance='user1.id')
-        self.assertEqual(review.__str__(), review.title)
+        review = Review.objects.filter(location='Glasgow', user_instance='user1.id').first()
+        self.assertEqual(str(review), review.title)
+
+
 
 class ServiceTests(TestCase):
     def test_ensure_views(self):
@@ -82,19 +80,9 @@ class ServiceTests(TestCase):
         updated_service_page = ServicePage.objects.filter(name='Uber').first()
         self.assertEqual(service_page.views, updated_service_page.views)
 
-    def test_service_name(self):
-        
-        service = ServicePage(name='test', location='glasgow', body='this is a test', views=1)
-        service.save()
-        
-        self.assertEqual(service.__str__(),service.name)
 
     def setUp(self):
         ServicePage.objects.create(name='Test Service', location='Test Location', body='Test Body')
-
-    def test_servicepage_slug_field(self):
-        service = ServicePage.objects.get(name='Test Service')
-        self.assertEqual(service.slug, 'test-service_test-location', f"{FAILURE_HEADER}Test service page failed.{FAILURE_FOOTER}")
 
 class ModelsTests(TestCase):
     def test_module_exists(self):
@@ -105,4 +93,78 @@ class ModelsTests(TestCase):
 
         self.assertTrue(os.path.exists(forms_module_path), f"{FAILURE_HEADER}We couldn't find Rango's new forms.py module. This is required to be created at the top of Section 7.2. This module should be storing your two form classes.{FAILURE_FOOTER}")
 
-    
+    def test_service_page_slug(self):
+        
+        service = ServicePage(name='test', location='glasgow')
+        service.save()
+        self.assertEqual(service.slug, 'test_glasgow')
+
+    def test_service_name(self):
+        
+        service = ServicePage(name='test', location='glasgow', body='this is a test', views=1)
+        service.save()
+        
+        self.assertEqual(service.__str__(),service.name)
+
+class FormsTest(TestCase):
+
+    def test_valid_review_form(self):
+        form_data = {
+            'title': 'Great taxi service!',
+            'rating': '5',
+            'location': 'glasgow',
+            'body': 'I had a fantastic experience with this taxi service. The driver was courteous and prompt, and the car was clean and comfortable.',
+            'service': 'glasgo',
+        }
+        form = ReviewForm(data=form_data)
+        self.assertTrue(form.is_valid())
+
+    def test_invalid_review_form(self):
+        form_data = {
+            'title': '',
+            'rating': '3',
+            'location': '',
+            'body': '',
+            'service': '',
+        }
+        form = ReviewForm(data=form_data)
+        self.assertFalse(form.is_valid())
+
+    def test_valid_service_form(self):
+        image_data = open('/static/images/glasgo.png', 'rb').read()
+        image_file = SimpleUploadedFile('image.jpg', image_data, content_type='image/jpeg')
+        
+        data = {
+            'name': 'Test Service',
+            'location': 'Test Location',
+            'body': 'Test Description',
+            'logo': image_file,
+            'slug': 'test-service'
+        }
+        form = ServiceForm(data=data)
+        self.assertTrue(form.is_valid())
+        service = form.save()
+        self.assertEqual(service.name, 'Test Service')
+        self.assertEqual(service.location, 'Test Location')
+        self.assertEqual(service.body, 'Test Description')
+        self.assertIsNotNone(service.logo)
+        self.assertEqual(service.slug, 'test-service')
+
+    def test_invalid_service_form(self):
+        """
+        Test that an invalid form raises validation errors.
+        """
+        data = {
+            'name': '',
+            'location': '',
+            'body': '',
+            'logo': None,
+            'slug': ''
+        }
+        form = ServiceForm(data=data)
+        self.assertFalse(form.is_valid())
+        self.assertEqual(len(form.errors), 4)
+        self.assertIn('name', form.errors)
+        self.assertIn('location', form.errors)
+        self.assertIn('body', form.errors)
+        self.assertIn('logo', form.errors)
