@@ -31,7 +31,7 @@ def populate():
                                  {'userID':user3.id,'location':'Edinburgh','service':'Uber','rating':4,'title':'Great','body':"Overall good experience with Uber, but the prices can be quite high during peak hours.",'likes':2},
                                  {'userID':user1.id,'location':'Edinburgh','service':'Uber','rating':5,'title':'Excellent!','body':"Excellent service, the driver arrived within 5 minutes of booking and was very friendly. The car was clean and comfortable. Will definitely use Uber again!",'likes':8}],
                          'City Cabs':[{'userID':user4.id,'location':'Edinburgh','service':'City Cabs','rating':3,'title':'Not great for booking a cab in advanced','body':'I could only book on the app if I wanted to book the taxi to the airport for the next morning, so I had to call and hope for a taxi to come at 4am.','likes':4},
-                                      {'userID':user4.id,'location':'Edinburgh','service':'City Cabs','rating':3,'title':'Okay','body':"GlasGo is an okay service, but the prices are a bit high compared to other taxi services in Glasgow.",'likes':2}],
+                                      {'userID':user4.id,'location':'Edinburgh','service':'City Cabs','rating':3,'title':'Okay','body':"City Cabs is an okay service, but the prices are a bit high compared to other taxi services in Glasgow.",'likes':2}],
                          'Central Taxis':[{'userID':user2.id,'location':'Edinburgh','service':'Central Taxis','rating':4,'title':'Excellent service','body':"Drivers will get out and help with doors or bags too. Smidgen more expensive than Uber etc but if you wanna arrive somewhere in a wee bit style a Black Cab fae Central Taxi's is a must.",'likes':6},
                                           {'userID':user3.id,'location':'Edinburgh','service':'Central Taxis','rating':5,'title':'Fab!','body':"Lovely driver, had a great time",'likes':10}]
     }
@@ -76,8 +76,9 @@ def populate():
         for service in location:
             serviceID = add_ServicePage(service['name'],service['location'],service['body'],service['logo'],service['views'])
             for review_key, review_data in service['reviews'].items():
-                user_instance = User.objects.get(id=review_data['userID'])
-                add_Review(serviceID, user_instance, review_data['location'], review_data['service'], review_data['rating'], review_data['title'], review_data['body'], review_data['likes'])
+                for i in range(len(review_data)):
+                    user_instance = User.objects.get(id=review_data[i]['userID'])
+                    add_Review(serviceID, user_instance, review_data[i]['location'], review_data[i]['service'], review_data[i]['rating'], review_data[i]['title'], review_data[i]['body'], review_data[i]['likes'])
                           
     # Print out the categories we have added.
     # for s in ServicePage.objects.all():
