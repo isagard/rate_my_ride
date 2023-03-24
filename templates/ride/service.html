@@ -17,6 +17,8 @@
             <div class="col-md-6">
                         {% if service %}
                             <h1>{{ service.name }}</h1>
+                            <div>{{service.body}}</div>
+                            <br>
                             <p><a href="javascript:history.back()">Back to {{location}} page</a></p>
                             <h2>Reviews</h2>
                             {% if reviews %}

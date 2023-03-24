@@ -18,7 +18,8 @@ from django.conf import settings
 from django.urls import reverse, resolve
 from django.contrib.auth.models import User
 from django.forms import fields as django_fields
-from .models import ServicePage, Review, UserProfile
+from ride.models import ServicePage, Review, UserProfile
+from ride.forms import ReviewForm, ServiceForm
 
 FAILURE_HEADER = f"{os.linesep}{os.linesep}{os.linesep}================{os.linesep}TwD TEST FAILURE =({os.linesep}================{os.linesep}"
 FAILURE_FOOTER = f"{os.linesep}"
@@ -62,9 +63,8 @@ class UserProfileTest(TestCase):
         UserProfile.objects.create(user=user, accountUser=True)
 
 class ReviewsTests(TestCase):
-    def test_ensure_views(self):
-        user1 = User.objects.create_user(username='user001', email='user001@example.com', password='password')
-        review = Review(serviceID='Uber', user_instance=user1.id, location='glasgow', service='Uber', rating='4', title='test title', body='test body', likes =3)
+    def test_review_title(self):
+        review = Review.objects.filter(location='Glasgow', user_instance='user1.id')
         self.assertEqual(review.__str__(), review.title)
 
 class ServiceTests(TestCase):
@@ -77,10 +77,10 @@ class ServiceTests(TestCase):
         self.assertEqual((service.location >= 'Glasgow'), True)
 
     def test_views_counter(self):
-        views = uber_glasgow.views
-        response = self.client.get(reverse('ride:home:glasgow:uber'))
-        session = self.client.session
-        self.assertEqual(views, uber_glasgow.views)
+        service_page = ServicePage.objects.filter(location='Glasgow',name='Uber')
+        response = self.client.get(reverse('ride:glasgow:uber_glasgow'))
+        updated_service_page = ServicePage.objects.filter(name='Uber').first()
+        self.assertEqual(service_page.views, updated_service_page.views)
 
     def test_service_name(self):
         
@@ -95,3 +95,14 @@ class ServiceTests(TestCase):
     def test_servicepage_slug_field(self):
         service = ServicePage.objects.get(name='Test Service')
         self.assertEqual(service.slug, 'test-service_test-location', f"{FAILURE_HEADER}Test service page failed.{FAILURE_FOOTER}")
+
+class ModelsTests(TestCase):
+    def test_module_exists(self):
+        
+        project_path = os.getcwd()
+        ride_app_path = os.path.join(project_path, 'ride')
+        forms_module_path = os.path.join(ride_app_path, 'forms.py')
+
+        self.assertTrue(os.path.exists(forms_module_path), f"{FAILURE_HEADER}We couldn't find Rango's new forms.py module. This is required to be created at the top of Section 7.2. This module should be storing your two form classes.{FAILURE_FOOTER}")
+
+    
