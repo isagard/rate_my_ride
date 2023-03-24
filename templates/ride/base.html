@@ -9,6 +9,7 @@
         content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <link rel="icon" href="{% static 'images/taxi.png' %}">
+    <script src="{% static "ride/stylesheet.css" %}"></script>
     <link rel="stylesheet" href="static/ride/stylesheet.css">
     <title>
         Rate My Ride - {% block title_block %}Home{% endblock %}
@@ -112,6 +113,7 @@
     </style>
 </head>
 <body>
+    <!-- Header nav bar -->
     <header>
         <nav class="navbar navbar-expand-md fixed-top p-0" style="background-color: rgb(164, 194, 244);">
             <img src="{% static 'images/taxi.png' %}" alt="Taxi" class="img-fluid" style="width: 150px; height: auto;">
@@ -126,41 +128,47 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
                 <ul class="navbar-nav p-4 ">
                     {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href="{% url 'ride:profile' user.username %}">My Account</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href="{% url 'ride:logout' %}?next=/ride/">Logout</a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="{% url 'ride:profile' user.username %}">My Account</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="{% url 'ride:logout' %}?next=/ride/">Logout</a>
+                        </li>
                     {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href="{% url 'ride:register' %}">Register Here</a>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link text-dark" href="{% url 'ride:login' %}">Login</a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="{% url 'ride:register' %}">Register Here</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link text-dark" href="{% url 'ride:login' %}">Login</a>
+                        </li>
                     {% endif %}
                 </ul>
             </div>
         </nav>
     </header>
     
+    <!-- Sidebar -->
     <nav class="col-md-2 d-none d-md-block sidebar">
         <div class="sidebar-sticky" style="background-color: rgb(201, 218, 248);">
             <ul class="navbar-nav mr-auto p-4">
                 <li class="nav-item">
-                    <a class="nav-link text-dark" href="{% url 'ride:glasgow' %}">Glasgow</a></li>
+                    <a class="nav-link text-dark" href="{% url 'ride:glasgow' %}">Glasgow</a>
+                </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark" href="{% url 'ride:edinburgh' %}">Edinburgh</a></li>
+                    <a class="nav-link text-dark" href="{% url 'ride:edinburgh' %}">Edinburgh</a>
+                </li>
                 <li class="nav-item ">
-                   <a class="nav-link text-dark" href="{% url 'ride:aberdeen' %}">Aberdeen</a></li>
+                   <a class="nav-link text-dark" href="{% url 'ride:aberdeen' %}">Aberdeen</a>
+                </li>
             </ul>
         </div>
     </nav>
+    <!-- Background colour -->
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" style="background-color: rgb(207, 226, 243);">
         {% block body_block %}
         {% endblock %}
     </main>
+    <!-- Footer bar -->
     <footer>
         <div class="footerdiv" class="col-md-9 ml-sm-auto col-lg-10 px-4">
             <div class="left">
@@ -185,7 +193,6 @@
     <script src="https://getbootstrap.com/docs/4.2/examples/dashboard/dashboard.js">
     </script>
     <script src="{% static "js/jquery-3.3.1.min.js" %}" crossorigin="anonymous"></script>
-    <script src="{% static "js/ride-jquery.js" %}" crossorigin="anonymous"></script>
     <script src="{% static "js/ride-ajax.js" %}" crossorigin="anonymous"></script>
 
     </body>
