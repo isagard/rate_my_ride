@@ -22,7 +22,7 @@ def glasgow(request):
 
     city_dict = {}
     city_dict['services'] = service_list
-    city_dict['location'] = 'glasgow'
+    city_dict['location'] = 'Glasgow'
 
     city_dict['viewed_services'] = ServicePage.objects.filter(location='Glasgow').order_by('-views')[:5]
     
@@ -35,7 +35,7 @@ def edinburgh(request):
 
     city_dict = {}
     city_dict['services'] = service_list
-    city_dict['location'] = 'edinburgh'
+    city_dict['location'] = 'Edinburgh'
 
     city_dict['viewed_services'] = ServicePage.objects.filter(location='Edinburgh').order_by('-views')[:5]
     
@@ -48,7 +48,7 @@ def aberdeen(request):
 
     city_dict = {}
     city_dict['services'] = service_list
-    city_dict['location'] = "aberdeen"
+    city_dict['location'] = "Aberdeen"
 
     city_dict['viewed_services'] = ServicePage.objects.filter(location='Aberdeen').order_by('-views')[:5]
     
@@ -70,7 +70,7 @@ def show_services(request, service_name_slug, location):
     
     try:
         service = ServicePage.objects.get(slug=service_name_slug)
-        reviews = Review.objects.filter(service=service)
+        reviews = Review.objects.filter(service=service,location=location)
         context_dict['reviews'] = reviews
         context_dict['service'] = service
         context_dict['location'] = location
