@@ -42,14 +42,18 @@
                     <div class="card-body">
                         <h2>Most Viewed Services</h2>
                         <p class="card-text">
-                        {% if reviews %}
-                            <ul>
-                                {% for review in reviews %}
-                                <li><a href="{{ review.url }}">{{ review.title }}</a></li>
+                        {% if services %}
+                            <ol>
+                                {% for service in viewed_services %}
+                                <li>
+                                <a href="{% url 'ride:show_services' location service.slug %}">
+                                    {{ service.name }}
+                                </a>
+                                </li>
                                 {% endfor %}
-                            </ul>
+                            </ol>
                         {% else %}
-                            <strong>There are no reviews present.</strong>
+                            <strong>There are no services present.</strong>
                         {% endif %}
                         </p>
                     </div>
